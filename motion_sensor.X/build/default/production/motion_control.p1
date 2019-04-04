@@ -9,7 +9,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S187 . . ]
 "3521
 [v _RC1STAbits `VS187 ~T0 @X0 0 e@413 ]
-"128 motion_control.c
+"130 motion_control.c
 [v _errorsISR `(v ~T0 @X0 0 ef1`*uc ]
 "3256 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f1526.h
 [v _RC1REG `Vuc ~T0 @X0 0 e@409 ]
@@ -18,15 +18,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 "153 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic.h
 [v __delay `JF3737 ~T0 @X0 0 e ]
 [p i __delay ]
-"134 motion_control.c
+"136 motion_control.c
 [v _GPIO_pin_Initialize `(v ~T0 @X0 0 ef ]
-"142
-[v _allPeripheralInit `(v ~T0 @X0 0 ef ]
 "144
-[v _copyReceivedDataBuffer `(v ~T0 @X0 0 ef ]
+[v _allPeripheralInit `(v ~T0 @X0 0 ef ]
 "146
+[v _copyReceivedDataBuffer `(v ~T0 @X0 0 ef ]
+"149
 [v _applianceControl `(v ~T0 @X0 0 ef7`uc`uc`uc`uc`uc`uc`uc ]
-"129
+"37 C:\Program Files (x86)\Microchip\xc8\v1.45\include\string.h
+[v _strcpy `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
+"36
+[v _strcat `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
+"133 motion_control.c
+[v _sendAcknowledgmentTOMotion `(v ~T0 @X0 0 ef1`*uc ]
+"131
 [v _errorsMain `(v ~T0 @X0 0 ef1`*uc ]
 "5205 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f1526.h
 [s S261 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -38,13 +44,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTFbits `VS260 ~T0 @X0 0 e@652 ]
 "3310
 [v _TX1REG `Vuc ~T0 @X0 0 e@410 ]
-"37 C:\Program Files (x86)\Microchip\xc8\v1.45\include\string.h
-[v _strcpy `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
-"36
-[v _strcat `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
-"131 motion_control.c
-[v _sendAcknowledgmentTOMotion `(v ~T0 @X0 0 ef1`*uc ]
-"433 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f1526.h
+"433
 [s S34 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S34 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
 "432
@@ -54,11 +54,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTAbits `VS33 ~T0 @X0 0 e@12 ]
 "55 C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdlib.h
 [v _atoi `(i ~T0 @X0 0 ef1`*Cuc ]
-"130 motion_control.c
+"132 motion_control.c
 [v _sendAcknowledgment `(v ~T0 @X0 0 ef1`*uc ]
-"132
+"134
 [v _clearAllPorts `(v ~T0 @X0 0 ef ]
-"133
+"135
 [v _pinINIT_extra `(v ~T0 @X0 0 ef ]
 "5767 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f1526.h
 [s S288 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -84,7 +84,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S76 . . ]
 "1477
 [v _TRISCbits `VS76 ~T0 @X0 0 e@142 ]
-"137 motion_control.c
+"139 motion_control.c
 [v _EUSART_Initialize `(v ~T0 @X0 0 ef ]
 "1652 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f1526.h
 [s S83 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -3891,7 +3891,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ]
 [; ;motion_control.c: 118: unsigned char mainReceivedDataBuffer[(16+2)]="#";
-"119
+"120
 [v _tempReceivedDataBuffer `uc ~T0 @X0 - + -> 16 `i -> 2 `i -> 8 `i e ]
 [i _tempReceivedDataBuffer
 :U ..
@@ -3899,8 +3899,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-[; ;motion_control.c: 119: unsigned char tempReceivedDataBuffer[(16+2)-8]="#";
-"120
+[; ;motion_control.c: 120: unsigned char tempReceivedDataBuffer[(16+2)-8]="#";
+"121
+[v _tempReceivedMotionDataBuffer `uc ~T0 @X0 + -> 16 `i -> 2 `i e ]
+[i _tempReceivedMotionDataBuffer
+:U ..
+-> 35 `c
+-> 0 `c
+..
+]
+[; ;motion_control.c: 121: unsigned char tempReceivedMotionDataBuffer[(16+2)]="#";
+"122
 [v _parentalLockBuffer `uc ~T0 @X0 -> 5 `i e ]
 [i _parentalLockBuffer
 :U ..
@@ -3911,8 +3920,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 48 `c
 ..
 ]
-[; ;motion_control.c: 120: unsigned char parentalLockBuffer[5]="00000";
-"121
+[; ;motion_control.c: 122: unsigned char parentalLockBuffer[5]="00000";
+"123
 [v _currentStateBuffer `uc ~T0 @X0 + * + -> 5 `i -> 2 `i -> 4 `i -> 2 `i e ]
 [i _currentStateBuffer
 :U ..
@@ -3920,22 +3929,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-[; ;motion_control.c: 121: unsigned char currentStateBuffer[((5+2)*4)+2]="#";
-"122
+[; ;motion_control.c: 123: unsigned char currentStateBuffer[((5+2)*4)+2]="#";
+"124
 [v _sendFinalBufferToGAteway `uc ~T0 @X0 -> 24 `i e ]
 [i _sendFinalBufferToGAteway
 :U ..
 -> -> 0 `i `uc
 ..
 ]
-[; ;motion_control.c: 122: unsigned char sendFinalBufferToGAteway[24] = (0);
-"125
+[; ;motion_control.c: 124: unsigned char sendFinalBufferToGAteway[24] = (0);
+"127
 [v _start_PWM_Generation_in_ISR_FLAG `i ~T0 @X0 1 e ]
 [i _start_PWM_Generation_in_ISR_FLAG
 -> 0 `i
 ]
-[; ;motion_control.c: 125: int start_PWM_Generation_in_ISR_FLAG=0;
-"126
+[; ;motion_control.c: 127: int start_PWM_Generation_in_ISR_FLAG=0;
+"128
 [v _levelofDimmer_MSB `uc ~T0 @X0 1 e ]
 [i _levelofDimmer_MSB
 -> -> 48 `ui `uc
@@ -3944,1419 +3953,1835 @@ Version 3.2 HI-TECH Software Intermediate Code
 [i _levelofDimmer_LSB
 -> -> 48 `ui `uc
 ]
-[; ;motion_control.c: 126: char levelofDimmer_MSB='0',levelofDimmer_LSB='0';
-[; ;motion_control.c: 128: void errorsISR(char* errNum);
-[; ;motion_control.c: 129: void errorsMain(char* errNum);
-[; ;motion_control.c: 130: void sendAcknowledgment(char* currentStateBuffer);
-[; ;motion_control.c: 131: void sendAcknowledgmentTOMotion(char* currentStateBufferMotion);
-[; ;motion_control.c: 132: void clearAllPorts();
-[; ;motion_control.c: 133: void pinINIT_extra();
-[; ;motion_control.c: 134: void GPIO_pin_Initialize();
-[; ;motion_control.c: 135: void peripheralsEnable();
-[; ;motion_control.c: 136: void AllInterruptEnable();
-[; ;motion_control.c: 137: void EUSART_Initialize();
-[; ;motion_control.c: 139: void TMR3_Initialize();
-[; ;motion_control.c: 140: void TMR1_Initialize();
-[; ;motion_control.c: 141: void CCP9_Initialize();
-[; ;motion_control.c: 142: void allPeripheralInit();
-[; ;motion_control.c: 144: void copyReceivedDataBuffer();
-[; ;motion_control.c: 146: void applianceControl(char switchMSB, char switchLSB, char switchSTATE, char dimmerSpeedMSB, char dimmerSpeedLSB, char parentalControl, char finalFrameState);
+[; ;motion_control.c: 128: char levelofDimmer_MSB='0',levelofDimmer_LSB='0';
+[; ;motion_control.c: 130: void errorsISR(char* errNum);
+[; ;motion_control.c: 131: void errorsMain(char* errNum);
+[; ;motion_control.c: 132: void sendAcknowledgment(char* currentStateBuffer);
+[; ;motion_control.c: 133: void sendAcknowledgmentTOMotion(char* currentStateBufferMotion);
+[; ;motion_control.c: 134: void clearAllPorts();
+[; ;motion_control.c: 135: void pinINIT_extra();
+[; ;motion_control.c: 136: void GPIO_pin_Initialize();
+[; ;motion_control.c: 137: void peripheralsEnable();
+[; ;motion_control.c: 138: void AllInterruptEnable();
+[; ;motion_control.c: 139: void EUSART_Initialize();
+[; ;motion_control.c: 141: void TMR3_Initialize();
+[; ;motion_control.c: 142: void TMR1_Initialize();
+[; ;motion_control.c: 143: void CCP9_Initialize();
+[; ;motion_control.c: 144: void allPeripheralInit();
+[; ;motion_control.c: 146: void copyReceivedDataBuffer();
+[; ;motion_control.c: 147: void copyReceivedMotionDataBuffer();
+[; ;motion_control.c: 149: void applianceControl(char switchMSB, char switchLSB, char switchSTATE, char dimmerSpeedMSB, char dimmerSpeedLSB, char parentalControl, char finalFrameState);
+[; ;motion_control.c: 150: void MotionControl( char status);
 [v $root$_isr `(v ~T0 @X0 0 e ]
-[v F3793 `(v ~T0 @X0 1 tf ]
-"148
-[v _isr `IF3793 ~T0 @X0 1 e ]
+[v F3797 `(v ~T0 @X0 1 tf ]
+"151
+[v _isr `IF3797 ~T0 @X0 1 e ]
 {
-[; ;motion_control.c: 148: interrupt void isr(){
+[; ;motion_control.c: 151: interrupt void isr(){
 [e :U _isr ]
 [f ]
-[; ;motion_control.c: 151: if(RC1IF){
-"151
+[; ;motion_control.c: 154: if(RC1IF){
+"154
 [e $ ! _RC1IF 465  ]
 {
-[; ;motion_control.c: 152: if(RC1STAbits.OERR){
-"152
+[; ;motion_control.c: 155: if(RC1STAbits.OERR){
+"155
 [e $ ! != -> . . _RC1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 466  ]
 {
-[; ;motion_control.c: 153: RC1STAbits.CREN = 0;
-"153
-[e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
-[; ;motion_control.c: 154: RC1STAbits.CREN = 1;
-"154
-[e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
-[; ;motion_control.c: 156: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='O'; ErrorNames[3]='V';
+[; ;motion_control.c: 156: RC1STAbits.CREN = 0;
 "156
+[e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
+[; ;motion_control.c: 157: RC1STAbits.CREN = 1;
+"157
+[e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
+[; ;motion_control.c: 159: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='O'; ErrorNames[3]='V';
+"159
 [e = *U + &U _ErrorNames * -> -> -> 0 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 69 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 1 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 82 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 2 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 79 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 3 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 86 `ui `uc ]
-[; ;motion_control.c: 157: errorsISR(ErrorNames);
-"157
+[; ;motion_control.c: 160: errorsISR(ErrorNames);
+"160
 [e ( _errorsISR (1 &U _ErrorNames ]
-"158
+"161
 }
 [e :U 466 ]
-[; ;motion_control.c: 158: }
-[; ;motion_control.c: 160: mainReceivedDataBuffer[mainReceivedDataPosition]=RC1REG;
-"160
+[; ;motion_control.c: 161: }
+[; ;motion_control.c: 163: mainReceivedDataBuffer[mainReceivedDataPosition]=RC1REG;
+"163
 [e = *U + &U _mainReceivedDataBuffer * -> -> _mainReceivedDataPosition `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux _RC1REG ]
-[; ;motion_control.c: 164: if(mainReceivedDataBuffer[0]=='%'){
-"164
+[; ;motion_control.c: 167: if(mainReceivedDataBuffer[0]=='%'){
+"167
 [e $ ! == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 37 `ui 467  ]
 {
-[; ;motion_control.c: 165: mainReceivedDataPosition++;
-"165
+[; ;motion_control.c: 168: mainReceivedDataPosition++;
+"168
 [e ++ _mainReceivedDataPosition -> 1 `i ]
-[; ;motion_control.c: 166: if(mainReceivedDataPosition>15){
-"166
+[; ;motion_control.c: 169: if(mainReceivedDataPosition>15){
+"169
 [e $ ! > _mainReceivedDataPosition -> 15 `i 468  ]
 {
-[; ;motion_control.c: 167: mainDataReceived=1;
-"167
-[e = _mainDataReceived -> 1 `i ]
-[; ;motion_control.c: 169: mainReceivedDataPosition=0;
-"169
-[e = _mainReceivedDataPosition -> 0 `i ]
-[; ;motion_control.c: 170: RC1IF=0;
+[; ;motion_control.c: 170: mainDataReceived=1;
 "170
-[e = _RC1IF -> -> 0 `i `b ]
+[e = _mainDataReceived -> 1 `i ]
+[; ;motion_control.c: 171: mainReceivedDataPosition=0;
 "171
+[e = _mainReceivedDataPosition -> 0 `i ]
+[; ;motion_control.c: 172: RC1IF=0;
+"172
+[e = _RC1IF -> -> 0 `i `b ]
+"173
 }
 [e :U 468 ]
-"172
-}
-[; ;motion_control.c: 171: }
-[; ;motion_control.c: 172: }
-[e $U 469  ]
-"173
-[e :U 467 ]
-[; ;motion_control.c: 173: else if((mainReceivedDataBuffer[0]=='M') && mainReceivedDataBuffer[0] != (0))
-[e $ ! && == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 77 `ui != -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `i -> 0 `i 470  ]
-[; ;motion_control.c: 174: {
 "174
-{
-[; ;motion_control.c: 175: mainReceivedDataPosition++;
+}
+[; ;motion_control.c: 173: }
+[; ;motion_control.c: 174: }
+[e $U 469  ]
 "175
-[e ++ _mainReceivedDataPosition -> 1 `i ]
-[; ;motion_control.c: 176: if(mainReceivedDataBuffer[mainReceivedDataPosition] == '|'){
+[e :U 467 ]
+[; ;motion_control.c: 175: else if(mainReceivedDataBuffer[0]=='M' )
+[e $ ! == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 77 `ui 470  ]
+[; ;motion_control.c: 176: {
 "176
+{
+[; ;motion_control.c: 178: if(mainReceivedDataBuffer[mainReceivedDataPosition] == '|'){
+"178
 [e $ ! == -> *U + &U _mainReceivedDataBuffer * -> -> _mainReceivedDataPosition `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 124 `ui 471  ]
 {
-[; ;motion_control.c: 177: MotionDatareceived=1;
-"177
-[e = _MotionDatareceived -> 1 `i ]
-[; ;motion_control.c: 178: mainReceivedDataPosition=0;
-"178
-[e = _mainReceivedDataPosition -> 0 `i ]
-[; ;motion_control.c: 179: RC1IF=0;
+[; ;motion_control.c: 179: mainDataReceived=1;
 "179
-[e = _RC1IF -> -> 0 `i `b ]
+[e = _mainDataReceived -> 1 `i ]
+[; ;motion_control.c: 180: mainReceivedDataPosition=0;
+"180
+[e = _mainReceivedDataPosition -> 0 `i ]
+[; ;motion_control.c: 181: RC1IF=0;
 "181
+[e = _RC1IF -> -> 0 `i `b ]
+"183
 }
 [e :U 471 ]
-"182
-}
-[; ;motion_control.c: 181: }
-[; ;motion_control.c: 182: }
-[e $U 472  ]
-"183
-[e :U 470 ]
-[; ;motion_control.c: 183: else{
-{
-[; ;motion_control.c: 184: RC1STAbits.CREN = 0;
+[; ;motion_control.c: 183: }
+[; ;motion_control.c: 184: mainReceivedDataPosition++;
 "184
-[e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
-[; ;motion_control.c: 185: RC1STAbits.CREN = 1;
+[e ++ _mainReceivedDataPosition -> 1 `i ]
 "185
-[e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
-[; ;motion_control.c: 186: mainReceivedDataPosition=0;
+}
+[; ;motion_control.c: 185: }
+[e $U 472  ]
 "186
-[e = _mainReceivedDataPosition -> 0 `i ]
-[; ;motion_control.c: 188: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='R'; ErrorNames[3]='X';
+[e :U 470 ]
+[; ;motion_control.c: 186: else{
+{
+[; ;motion_control.c: 187: RC1STAbits.CREN = 0;
+"187
+[e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
+[; ;motion_control.c: 188: RC1STAbits.CREN = 1;
 "188
+[e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
+[; ;motion_control.c: 189: mainReceivedDataPosition=0;
+"189
+[e = _mainReceivedDataPosition -> 0 `i ]
+[; ;motion_control.c: 191: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='R'; ErrorNames[3]='X';
+"191
 [e = *U + &U _ErrorNames * -> -> -> 0 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 69 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 1 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 82 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 2 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 82 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 3 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 88 `ui `uc ]
-[; ;motion_control.c: 189: errorsISR(ErrorNames);
-"189
+[; ;motion_control.c: 192: errorsISR(ErrorNames);
+"192
 [e ( _errorsISR (1 &U _ErrorNames ]
-"190
+"193
 }
 [e :U 472 ]
 [e :U 469 ]
-"191
+"194
 }
 [e :U 465 ]
-[; ;motion_control.c: 190: }
-[; ;motion_control.c: 191: }
-[; ;motion_control.c: 192: }
-"192
+[; ;motion_control.c: 193: }
+[; ;motion_control.c: 194: }
+[; ;motion_control.c: 195: }
+"195
 [e :UE 464 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"201
+"204
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 201: int main() {
+[; ;motion_control.c: 204: int main() {
 [e :U _main ]
 [f ]
-[; ;motion_control.c: 202: _delay((unsigned long)((2000)*(16000000/4000.0)));
-"202
+[; ;motion_control.c: 205: _delay((unsigned long)((2000)*(16000000/4000.0)));
+"205
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 203: M1=1; M2=1; M3=1; M4=1; M5=1;
-"203
+[; ;motion_control.c: 206: M1=1; M2=1; M3=1; M4=1; M5=1;
+"206
 [e = _M1 -> -> 1 `i `ui ]
 [e = _M2 -> -> 1 `i `ui ]
 [e = _M3 -> -> 1 `i `ui ]
 [e = _M4 -> -> 1 `i `ui ]
 [e = _M5 -> -> 1 `i `ui ]
-[; ;motion_control.c: 206: GPIO_pin_Initialize();
-"206
-[e ( _GPIO_pin_Initialize ..  ]
-[; ;motion_control.c: 207: allPeripheralInit();
-"207
-[e ( _allPeripheralInit ..  ]
-[; ;motion_control.c: 209: while(1){
+[; ;motion_control.c: 209: GPIO_pin_Initialize();
 "209
+[e ( _GPIO_pin_Initialize ..  ]
+[; ;motion_control.c: 210: allPeripheralInit();
+"210
+[e ( _allPeripheralInit ..  ]
+[; ;motion_control.c: 212: while(1){
+"212
 [e :U 475 ]
 {
-[; ;motion_control.c: 210: if(mainDataReceived==1){
-"210
+[; ;motion_control.c: 213: if(mainDataReceived==1){
+"213
 [e $ ! == _mainDataReceived -> 1 `i 477  ]
 {
-[; ;motion_control.c: 212: mainDataReceived=0;
-"212
+[; ;motion_control.c: 214: mainDataReceived=0;
+"214
 [e = _mainDataReceived -> 0 `i ]
-[; ;motion_control.c: 213: if(mainReceivedDataBuffer[0]=='%' && mainReceivedDataBuffer[1]=='%' && mainReceivedDataBuffer[14]=='@' && mainReceivedDataBuffer[15]=='@'){
-"213
+[; ;motion_control.c: 215: if(mainReceivedDataBuffer[0]=='%' && mainReceivedDataBuffer[1]=='%' && mainReceivedDataBuffer[14]=='@' && mainReceivedDataBuffer[15]=='@'){
+"215
 [e $ ! && && && == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 37 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 37 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 14 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 64 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 15 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 64 `ui 478  ]
 {
-[; ;motion_control.c: 214: copyReceivedDataBuffer();
-"214
+[; ;motion_control.c: 216: copyReceivedDataBuffer();
+"216
 [e ( _copyReceivedDataBuffer ..  ]
-[; ;motion_control.c: 216: applianceControl(tempReceivedDataBuffer[0],
-[; ;motion_control.c: 217: tempReceivedDataBuffer[1],
-[; ;motion_control.c: 218: tempReceivedDataBuffer[2],
-[; ;motion_control.c: 219: tempReceivedDataBuffer[3],
-[; ;motion_control.c: 220: tempReceivedDataBuffer[4],
-[; ;motion_control.c: 221: tempReceivedDataBuffer[5],
-[; ;motion_control.c: 222: tempReceivedDataBuffer[6]);
-"222
-[e ( _applianceControl (4 , , , , , , *U + &U _tempReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux ]
+[; ;motion_control.c: 218: applianceControl(tempReceivedDataBuffer[0],
+[; ;motion_control.c: 219: tempReceivedDataBuffer[1],
+[; ;motion_control.c: 220: tempReceivedDataBuffer[2],
+[; ;motion_control.c: 221: tempReceivedDataBuffer[3],
+[; ;motion_control.c: 222: tempReceivedDataBuffer[4],
+[; ;motion_control.c: 223: tempReceivedDataBuffer[5],
+[; ;motion_control.c: 224: tempReceivedDataBuffer[6]);
 "224
-}
-[; ;motion_control.c: 224: }
-[e $U 479  ]
-"225
-[e :U 478 ]
-[; ;motion_control.c: 225: else if(mainReceivedDataBuffer[0]=='R' && mainReceivedDataBuffer[1]=='T' && mainReceivedDataBuffer[9]=='1'){
-[e $ ! && && == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 82 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 84 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 9 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 49 `ui 480  ]
-{
-[; ;motion_control.c: 226: MotionDataFlag = 1;
+[e ( _applianceControl (4 , , , , , , *U + &U _tempReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _tempReceivedDataBuffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux ]
 "226
-[e = _MotionDataFlag -> 1 `i ]
-[; ;motion_control.c: 227: errorsISR("MOTN");
-"227
-[e ( _errorsISR (1 -> :s 1C `*uc ]
-"228
 }
-[; ;motion_control.c: 228: }
-[e $U 481  ]
-"229
-[e :U 480 ]
-[; ;motion_control.c: 229: else
-[; ;motion_control.c: 230: {
-"230
+[; ;motion_control.c: 226: }
+[e $U 479  ]
+"227
+[e :U 478 ]
+[; ;motion_control.c: 227: else if(mainReceivedDataBuffer[0]=='M' && mainReceivedDataBuffer[1]=='T'){
+[e $ ! && == -> *U + &U _mainReceivedDataBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 77 `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 84 `ui 480  ]
 {
-[; ;motion_control.c: 231: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='L'; ErrorNames[3]='S';
+[; ;motion_control.c: 228: strcpy(sendFinalBufferToGAteway,"MT");
+"228
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 1C ]
+[; ;motion_control.c: 229: strcat(sendFinalBufferToGAteway,".");
+"229
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 2C ]
+[; ;motion_control.c: 230: strcat(sendFinalBufferToGAteway,"3");
+"230
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 3C ]
+[; ;motion_control.c: 231: strcat(sendFinalBufferToGAteway,".");
 "231
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 4C ]
+[; ;motion_control.c: 232: strcat(sendFinalBufferToGAteway,"ACTACK");
+"232
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 5C ]
+[; ;motion_control.c: 233: strcat(sendFinalBufferToGAteway,".");
+"233
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 6C ]
+[; ;motion_control.c: 234: strcat(sendFinalBufferToGAteway,"1");
+"234
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 7C ]
+[; ;motion_control.c: 235: strcat(sendFinalBufferToGAteway,".");
+"235
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 8C ]
+[; ;motion_control.c: 236: strcat(sendFinalBufferToGAteway,"1");
+"236
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 9C ]
+[; ;motion_control.c: 237: strcat(sendFinalBufferToGAteway,".");
+"237
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 10C ]
+[; ;motion_control.c: 238: strcat(sendFinalBufferToGAteway,"1");
+"238
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 11C ]
+[; ;motion_control.c: 239: strcat(sendFinalBufferToGAteway,".");
+"239
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 12C ]
+[; ;motion_control.c: 240: strcat(sendFinalBufferToGAteway,"1000|");
+"240
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 13C ]
+[; ;motion_control.c: 241: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"241
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+"243
+}
+[; ;motion_control.c: 243: }
+[e $U 481  ]
+"244
+[e :U 480 ]
+[; ;motion_control.c: 244: else
+[; ;motion_control.c: 245: {
+"245
+{
+[; ;motion_control.c: 246: ErrorNames[0]='E'; ErrorNames[1]='R'; ErrorNames[2]='L'; ErrorNames[3]='S';
+"246
 [e = *U + &U _ErrorNames * -> -> -> 0 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 69 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 1 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 82 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 2 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 76 `ui `uc ]
 [e = *U + &U _ErrorNames * -> -> -> 3 `i `ui `ux -> -> # *U &U _ErrorNames `ui `ux -> -> 83 `ui `uc ]
-[; ;motion_control.c: 232: errorsMain(ErrorNames);
-"232
+[; ;motion_control.c: 247: errorsMain(ErrorNames);
+"247
 [e ( _errorsMain (1 &U _ErrorNames ]
-[; ;motion_control.c: 233: RC1STAbits.SPEN=0;
-"233
+[; ;motion_control.c: 248: RC1STAbits.SPEN=0;
+"248
 [e = . . _RC1STAbits 0 7 -> -> 0 `i `uc ]
-[; ;motion_control.c: 234: RC1STAbits.CREN = 0;
-"234
+[; ;motion_control.c: 249: RC1STAbits.CREN = 0;
+"249
 [e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
-[; ;motion_control.c: 235: for(int dataBufferCounter = 0; dataBufferCounter< 15; dataBufferCounter++)
-"235
+[; ;motion_control.c: 250: for(int dataBufferCounter = 0; dataBufferCounter< 15; dataBufferCounter++)
+"250
 {
 [v _dataBufferCounter `i ~T0 @X0 1 a ]
 [e = _dataBufferCounter -> 0 `i ]
 [e $ < _dataBufferCounter -> 15 `i 482  ]
 [e $U 483  ]
-"236
+"251
 [e :U 482 ]
-[; ;motion_control.c: 236: {
+[; ;motion_control.c: 251: {
 {
-[; ;motion_control.c: 237: mainReceivedDataBuffer[dataBufferCounter] = '#';
-"237
+[; ;motion_control.c: 252: mainReceivedDataBuffer[dataBufferCounter] = '#';
+"252
 [e = *U + &U _mainReceivedDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux -> -> 35 `ui `uc ]
-"238
+"253
 }
-"235
+"250
 [e ++ _dataBufferCounter -> 1 `i ]
 [e $ < _dataBufferCounter -> 15 `i 482  ]
 [e :U 483 ]
-"238
+"253
 }
-[; ;motion_control.c: 238: }
-[; ;motion_control.c: 239: RC1STAbits.CREN = 1;
-"239
+[; ;motion_control.c: 253: }
+[; ;motion_control.c: 254: RC1STAbits.CREN = 1;
+"254
 [e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
-[; ;motion_control.c: 240: RC1STAbits.SPEN=1;
-"240
+[; ;motion_control.c: 255: RC1STAbits.SPEN=1;
+"255
 [e = . . _RC1STAbits 0 7 -> -> 1 `i `uc ]
-"241
+"256
 }
 [e :U 481 ]
 [e :U 479 ]
-"242
+"257
 }
 [e :U 477 ]
-"248
+"264
 [v _man `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 241: }
-[; ;motion_control.c: 242: }
-[; ;motion_control.c: 248: int man = 1;
+[; ;motion_control.c: 256: }
+[; ;motion_control.c: 257: }
+[; ;motion_control.c: 264: int man = 1;
 [e = _man -> 1 `i ]
-[; ;motion_control.c: 249: if(parentalLockBuffer[1] == '0' && PORTFbits.RF7 == 0 && M1 == 0)
-"249
-[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 7 `i -> 0 `i == _M1 -> -> 0 `i `ui 485  ]
-[; ;motion_control.c: 250: {
-"250
-{
-[; ;motion_control.c: 251: if(man == 1)
-"251
-[e $ ! == _man -> 1 `i 486  ]
-[; ;motion_control.c: 252: {
-"252
-{
-[; ;motion_control.c: 253: _delay((unsigned long)((5)*(16000000/4000.0)));
-"253
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 254: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
-"254
-[e = _TX1REG -> -> 82 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 255: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
-"255
-[e = _TX1REG -> -> 48 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 256: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
-"256
-[e = _TX1REG -> -> 48 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 257: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
-"257
-[e = _TX1REG -> -> 49 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 258: PORTFbits.RF1=0;
-"258
-[e = . . _PORTFbits 0 1 -> -> 0 `i `uc ]
-"259
-}
-[e :U 486 ]
-[; ;motion_control.c: 259: }
-[; ;motion_control.c: 260: man=0;
-"260
-[e = _man -> 0 `i ]
-[; ;motion_control.c: 261: M1=1;
-"261
-[e = _M1 -> -> 1 `i `ui ]
-"263
-}
-[e :U 485 ]
-[; ;motion_control.c: 263: }
-[; ;motion_control.c: 265: if(parentalLockBuffer[1] == '0' && PORTFbits.RF7 == 1 && M1 == 1)
+[; ;motion_control.c: 265: if(parentalLockBuffer[1] == '0' && PORTFbits.RF7 == 0 && M1 == 0)
 "265
-[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 7 `i -> 1 `i == _M1 -> -> 1 `i `ui 487  ]
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 7 `i -> 0 `i == _M1 -> -> 0 `i `ui 485  ]
 [; ;motion_control.c: 266: {
 "266
 {
-[; ;motion_control.c: 268: if(man==1)
+[; ;motion_control.c: 267: if(man == 1)
+"267
+[e $ ! == _man -> 1 `i 486  ]
+[; ;motion_control.c: 268: {
 "268
-[e $ ! == _man -> 1 `i 488  ]
-[; ;motion_control.c: 269: {
-"269
 {
-[; ;motion_control.c: 270: _delay((unsigned long)((5)*(16000000/4000.0)));
-"270
+[; ;motion_control.c: 269: _delay((unsigned long)((5)*(16000000/4000.0)));
+"269
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 271: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
-"271
+[; ;motion_control.c: 270: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
+"270
 [e = _TX1REG -> -> 82 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 272: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
-"272
-[e = _TX1REG -> -> 49 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 273: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
-"273
+[; ;motion_control.c: 271: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
+"271
 [e = _TX1REG -> -> 48 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 274: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
-"274
+[; ;motion_control.c: 272: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
+"272
+[e = _TX1REG -> -> 48 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 273: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
+"273
 [e = _TX1REG -> -> 49 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 275: PORTFbits.RF1=1;
+[; ;motion_control.c: 274: PORTFbits.RF1=0;
+"274
+[e = . . _PORTFbits 0 1 -> -> 0 `i `uc ]
 "275
-[e = . . _PORTFbits 0 1 -> -> 1 `i `uc ]
-"276
 }
-[e :U 488 ]
-[; ;motion_control.c: 276: }
-[; ;motion_control.c: 277: man=0;
-"277
+[e :U 486 ]
+[; ;motion_control.c: 275: }
+[; ;motion_control.c: 276: man=0;
+"276
 [e = _man -> 0 `i ]
-[; ;motion_control.c: 278: M1=0;
-"278
-[e = _M1 -> -> 0 `i `ui ]
+[; ;motion_control.c: 277: M1=1;
+"277
+[e = _M1 -> -> 1 `i `ui ]
 "279
 }
-[e :U 487 ]
+[e :U 485 ]
 [; ;motion_control.c: 279: }
-[; ;motion_control.c: 283: if(parentalLockBuffer[2] == '0' && PORTFbits.RF5 == 0 && M2 == 0)
-"283
-[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 5 `i -> 0 `i == _M2 -> -> 0 `i `ui 489  ]
-[; ;motion_control.c: 284: {
+[; ;motion_control.c: 281: if(parentalLockBuffer[1] == '0' && PORTFbits.RF7 == 1 && M1 == 1)
+"281
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 7 `i -> 1 `i == _M1 -> -> 1 `i `ui 487  ]
+[; ;motion_control.c: 282: {
+"282
+{
+[; ;motion_control.c: 284: if(man==1)
 "284
-{
-[; ;motion_control.c: 285: if(man==1)
+[e $ ! == _man -> 1 `i 488  ]
+[; ;motion_control.c: 285: {
 "285
-[e $ ! == _man -> 1 `i 490  ]
-[; ;motion_control.c: 286: {
-"286
 {
-[; ;motion_control.c: 287: _delay((unsigned long)((5)*(16000000/4000.0)));
-"287
+[; ;motion_control.c: 286: _delay((unsigned long)((5)*(16000000/4000.0)));
+"286
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 288: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
-"288
+[; ;motion_control.c: 287: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
+"287
 [e = _TX1REG -> -> 82 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 288: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
+"288
+[e = _TX1REG -> -> 49 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 [; ;motion_control.c: 289: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
 "289
 [e = _TX1REG -> -> 48 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 290: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
+[; ;motion_control.c: 290: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
 "290
-[e = _TX1REG -> -> 48 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 291: TX1REG = '2';_delay((unsigned long)((1)*(16000000/4000.0)));
-"291
-[e = _TX1REG -> -> 50 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 292: PORTFbits.RF0=0;
-"292
-[e = . . _PORTFbits 0 0 -> -> 0 `i `uc ]
-"293
-}
-[e :U 490 ]
-[; ;motion_control.c: 293: }
-[; ;motion_control.c: 294: man=0;
-"294
-[e = _man -> 0 `i ]
-[; ;motion_control.c: 295: M2=1;
-"295
-[e = _M2 -> -> 1 `i `ui ]
-"296
-}
-[e :U 489 ]
-[; ;motion_control.c: 296: }
-[; ;motion_control.c: 298: if(parentalLockBuffer[2] == '0' && PORTFbits.RF5 == 1 && M2 == 1 )
-"298
-[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 5 `i -> 1 `i == _M2 -> -> 1 `i `ui 491  ]
-[; ;motion_control.c: 299: {
-"299
-{
-[; ;motion_control.c: 300: if(man==1)
-"300
-[e $ ! == _man -> 1 `i 492  ]
-[; ;motion_control.c: 301: {
-"301
-{
-[; ;motion_control.c: 302: _delay((unsigned long)((5)*(16000000/4000.0)));
-"302
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 303: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
-"303
-[e = _TX1REG -> -> 82 `ui `uc ]
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 304: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
-"304
 [e = _TX1REG -> -> 49 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 291: PORTFbits.RF1=1;
+"291
+[e = . . _PORTFbits 0 1 -> -> 1 `i `uc ]
+"292
+}
+[e :U 488 ]
+[; ;motion_control.c: 292: }
+[; ;motion_control.c: 293: man=0;
+"293
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 294: M1=0;
+"294
+[e = _M1 -> -> 0 `i `ui ]
+"295
+}
+[e :U 487 ]
+[; ;motion_control.c: 295: }
+[; ;motion_control.c: 299: if(parentalLockBuffer[2] == '0' && PORTFbits.RF5 == 0 && M2 == 0)
+"299
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 5 `i -> 0 `i == _M2 -> -> 0 `i `ui 489  ]
+[; ;motion_control.c: 300: {
+"300
+{
+[; ;motion_control.c: 301: if(man==1)
+"301
+[e $ ! == _man -> 1 `i 490  ]
+[; ;motion_control.c: 302: {
+"302
+{
+[; ;motion_control.c: 303: _delay((unsigned long)((5)*(16000000/4000.0)));
+"303
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 304: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
+"304
+[e = _TX1REG -> -> 82 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 [; ;motion_control.c: 305: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
 "305
 [e = _TX1REG -> -> 48 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 306: TX1REG = '2';_delay((unsigned long)((1)*(16000000/4000.0)));
+[; ;motion_control.c: 306: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
 "306
+[e = _TX1REG -> -> 48 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 307: TX1REG = '2';_delay((unsigned long)((1)*(16000000/4000.0)));
+"307
 [e = _TX1REG -> -> 50 `ui `uc ]
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-[; ;motion_control.c: 307: PORTFbits.RF0=1;
-"307
-[e = . . _PORTFbits 0 0 -> -> 1 `i `uc ]
+[; ;motion_control.c: 308: PORTFbits.RF0=0;
 "308
-}
-[e :U 492 ]
-[; ;motion_control.c: 308: }
-[; ;motion_control.c: 309: man=0;
+[e = . . _PORTFbits 0 0 -> -> 0 `i `uc ]
 "309
-[e = _man -> 0 `i ]
-[; ;motion_control.c: 310: M2=0;
-"310
-[e = _M2 -> -> 0 `i `ui ]
-"311
 }
-[e :U 491 ]
-[; ;motion_control.c: 311: }
-[; ;motion_control.c: 316: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 && mainReceivedDataBuffer[9]=='1')
+[e :U 490 ]
+[; ;motion_control.c: 309: }
+[; ;motion_control.c: 310: man=0;
+"310
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 311: M2=1;
+"311
+[e = _M2 -> -> 1 `i `ui ]
+"312
+}
+[e :U 489 ]
+[; ;motion_control.c: 312: }
+[; ;motion_control.c: 314: if(parentalLockBuffer[2] == '0' && PORTFbits.RF5 == 1 && M2 == 1 )
+"314
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 5 `i -> 1 `i == _M2 -> -> 1 `i `ui 491  ]
+[; ;motion_control.c: 315: {
+"315
+{
+[; ;motion_control.c: 316: if(man==1)
 "316
-[e $ ! && && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 0 `i == _M3 -> -> 0 `i `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 9 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 49 `ui 493  ]
+[e $ ! == _man -> 1 `i 492  ]
 [; ;motion_control.c: 317: {
 "317
 {
-[; ;motion_control.c: 318: if(man == 1)
+[; ;motion_control.c: 318: _delay((unsigned long)((5)*(16000000/4000.0)));
 "318
-[e $ ! == _man -> 1 `i 494  ]
-[; ;motion_control.c: 319: {
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 319: TX1REG = 'R';_delay((unsigned long)((1)*(16000000/4000.0)));
 "319
-{
-[; ;motion_control.c: 321: strcpy(sendFinalBufferToGAteway,"MT");
+[e = _TX1REG -> -> 82 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 320: TX1REG = '1';_delay((unsigned long)((1)*(16000000/4000.0)));
+"320
+[e = _TX1REG -> -> 49 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 321: TX1REG = '0';_delay((unsigned long)((1)*(16000000/4000.0)));
 "321
-[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 2C ]
-[; ;motion_control.c: 322: strcat(sendFinalBufferToGAteway,".");
+[e = _TX1REG -> -> 48 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 322: TX1REG = '2';_delay((unsigned long)((1)*(16000000/4000.0)));
 "322
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 3C ]
-[; ;motion_control.c: 323: strcat(sendFinalBufferToGAteway,"3");
+[e = _TX1REG -> -> 50 `ui `uc ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;motion_control.c: 323: PORTFbits.RF0=1;
 "323
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 4C ]
-[; ;motion_control.c: 324: strcat(sendFinalBufferToGAteway,".");
+[e = . . _PORTFbits 0 0 -> -> 1 `i `uc ]
 "324
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 5C ]
-[; ;motion_control.c: 325: strcat(sendFinalBufferToGAteway,"ACKACT");
+}
+[e :U 492 ]
+[; ;motion_control.c: 324: }
+[; ;motion_control.c: 325: man=0;
 "325
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 6C ]
-[; ;motion_control.c: 326: strcat(sendFinalBufferToGAteway,".");
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 326: M2=0;
 "326
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 7C ]
-[; ;motion_control.c: 327: strcat(sendFinalBufferToGAteway,"0");
+[e = _M2 -> -> 0 `i `ui ]
 "327
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 8C ]
-[; ;motion_control.c: 328: strcat(sendFinalBufferToGAteway,".");
-"328
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 9C ]
-[; ;motion_control.c: 329: strcat(sendFinalBufferToGAteway,"1");
+}
+[e :U 491 ]
+[; ;motion_control.c: 327: }
+[; ;motion_control.c: 329: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 )
 "329
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 10C ]
-[; ;motion_control.c: 330: strcat(sendFinalBufferToGAteway,".");
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 0 `i == _M3 -> -> 0 `i `ui 493  ]
+[; ;motion_control.c: 330: {
 "330
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 11C ]
-[; ;motion_control.c: 331: strcat(sendFinalBufferToGAteway,"1000");
+{
+[; ;motion_control.c: 331: if(man == 1)
 "331
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 12C ]
-[; ;motion_control.c: 332: strcat(sendFinalBufferToGAteway,"|");
+[e $ ! == _man -> 1 `i 494  ]
+[; ;motion_control.c: 332: {
 "332
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 13C ]
-[; ;motion_control.c: 333: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
-"333
-[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
-[; ;motion_control.c: 335: PORTAbits.RA3=0;
+{
+[; ;motion_control.c: 334: strcpy(sendFinalBufferToGAteway,"MT");
+"334
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 14C ]
+[; ;motion_control.c: 335: strcat(sendFinalBufferToGAteway,".");
 "335
-[e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 15C ]
+[; ;motion_control.c: 336: strcat(sendFinalBufferToGAteway,"3");
 "336
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 16C ]
+[; ;motion_control.c: 337: strcat(sendFinalBufferToGAteway,".");
+"337
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 17C ]
+[; ;motion_control.c: 338: strcat(sendFinalBufferToGAteway,"READ");
+"338
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 18C ]
+[; ;motion_control.c: 339: strcat(sendFinalBufferToGAteway,".");
+"339
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 19C ]
+[; ;motion_control.c: 340: strcat(sendFinalBufferToGAteway,"0");
+"340
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 20C ]
+[; ;motion_control.c: 341: strcat(sendFinalBufferToGAteway,"|");
+"341
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 21C ]
+[; ;motion_control.c: 342: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"342
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 344: PORTAbits.RA3=0;
+"344
+[e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
+"345
 }
 [e :U 494 ]
-[; ;motion_control.c: 336: }
-[; ;motion_control.c: 337: man=0;
-"337
+[; ;motion_control.c: 345: }
+[; ;motion_control.c: 346: man=0;
+"346
 [e = _man -> 0 `i ]
-[; ;motion_control.c: 338: M3=1;
-"338
+[; ;motion_control.c: 347: M3=1;
+"347
 [e = _M3 -> -> 1 `i `ui ]
-"340
+"349
 }
 [e :U 493 ]
-[; ;motion_control.c: 340: }
-[; ;motion_control.c: 342: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1 && mainReceivedDataBuffer[9]=='1')
-"342
-[e $ ! && && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 1 `i == _M3 -> -> 1 `i `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 9 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 49 `ui 495  ]
-[; ;motion_control.c: 343: {
-"343
-{
-[; ;motion_control.c: 344: MotionDataFlag = 0;
-"344
-[e = _MotionDataFlag -> 0 `i ]
-[; ;motion_control.c: 345: if(man==1)
-"345
-[e $ ! == _man -> 1 `i 496  ]
-[; ;motion_control.c: 346: {
-"346
-{
-[; ;motion_control.c: 348: strcat(sendFinalBufferToGAteway,"MT");
-"348
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 14C ]
-[; ;motion_control.c: 349: strcat(sendFinalBufferToGAteway,".");
-"349
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 15C ]
-[; ;motion_control.c: 350: strcat(sendFinalBufferToGAteway,"3");
-"350
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 16C ]
-[; ;motion_control.c: 351: strcat(sendFinalBufferToGAteway,".");
+[; ;motion_control.c: 349: }
+[; ;motion_control.c: 351: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1)
 "351
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 17C ]
-[; ;motion_control.c: 352: strcat(sendFinalBufferToGAteway,"ACKACT");
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 1 `i == _M3 -> -> 1 `i `ui 495  ]
+[; ;motion_control.c: 352: {
 "352
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 18C ]
-[; ;motion_control.c: 353: strcat(sendFinalBufferToGAteway,".");
-"353
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 19C ]
-[; ;motion_control.c: 354: strcat(sendFinalBufferToGAteway,"1");
+{
+[; ;motion_control.c: 354: if(man==1)
 "354
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 20C ]
-[; ;motion_control.c: 355: strcat(sendFinalBufferToGAteway,".");
+[e $ ! == _man -> 1 `i 496  ]
+[; ;motion_control.c: 355: {
 "355
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 21C ]
-[; ;motion_control.c: 356: strcat(sendFinalBufferToGAteway,"1");
-"356
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 22C ]
-[; ;motion_control.c: 357: strcat(sendFinalBufferToGAteway,".");
+{
+[; ;motion_control.c: 357: strcpy(sendFinalBufferToGAteway,"MT");
 "357
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 23C ]
-[; ;motion_control.c: 358: strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 22C ]
+[; ;motion_control.c: 358: strcat(sendFinalBufferToGAteway,".");
 "358
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 24C ]
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 25C ]
-[; ;motion_control.c: 359: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 23C ]
+[; ;motion_control.c: 359: strcat(sendFinalBufferToGAteway,"3");
 "359
-[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
-[; ;motion_control.c: 361: PORTAbits.RA3=1;
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 24C ]
+[; ;motion_control.c: 360: strcat(sendFinalBufferToGAteway,".");
+"360
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 25C ]
+[; ;motion_control.c: 361: strcat(sendFinalBufferToGAteway,"READ");
 "361
-[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 26C ]
+[; ;motion_control.c: 362: strcat(sendFinalBufferToGAteway,".");
 "362
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 27C ]
+[; ;motion_control.c: 363: strcat(sendFinalBufferToGAteway,"1");
+"363
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 28C ]
+[; ;motion_control.c: 364: strcat(sendFinalBufferToGAteway,"|");
+"364
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 29C ]
+[; ;motion_control.c: 365: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"365
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 367: PORTAbits.RA3=1;
+"367
+[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+"368
 }
 [e :U 496 ]
-[; ;motion_control.c: 362: }
-[; ;motion_control.c: 363: man=0;
-"363
+[; ;motion_control.c: 368: }
+[; ;motion_control.c: 369: man=0;
+"369
 [e = _man -> 0 `i ]
-[; ;motion_control.c: 364: M3=0;
-"364
+[; ;motion_control.c: 370: M3=0;
+"370
 [e = _M3 -> -> 0 `i `ui ]
-"366
+"372
 }
 [e :U 495 ]
-[; ;motion_control.c: 366: }
-[; ;motion_control.c: 371: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 && mainReceivedDataBuffer[9]=='1' )
-"371
-[e $ ! && && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 0 `i == _M4 -> -> 0 `i `ui == -> *U + &U _mainReceivedDataBuffer * -> -> -> 9 `i `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux `ui -> 49 `ui 497  ]
-[; ;motion_control.c: 372: {
-"372
-{
-[; ;motion_control.c: 373: if(man==1)
-"373
-[e $ ! == _man -> 1 `i 498  ]
-[; ;motion_control.c: 374: {
-"374
-{
-[; ;motion_control.c: 375: strcpy(sendFinalBufferToGAteway,"MT");
-"375
-[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 26C ]
-[; ;motion_control.c: 376: strcat(sendFinalBufferToGAteway,".");
-"376
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 27C ]
-[; ;motion_control.c: 377: strcat(sendFinalBufferToGAteway,"4");
+[; ;motion_control.c: 372: }
+[; ;motion_control.c: 377: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 )
 "377
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 28C ]
-[; ;motion_control.c: 378: strcat(sendFinalBufferToGAteway,".");
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 0 `i == _M4 -> -> 0 `i `ui 497  ]
+[; ;motion_control.c: 378: {
 "378
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 29C ]
-[; ;motion_control.c: 379: strcat(sendFinalBufferToGAteway,"ACKACT");
+{
+[; ;motion_control.c: 379: if(man==1)
 "379
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 30C ]
-[; ;motion_control.c: 380: strcat(sendFinalBufferToGAteway,".");
+[e $ ! == _man -> 1 `i 498  ]
+[; ;motion_control.c: 380: {
 "380
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 31C ]
-[; ;motion_control.c: 381: strcat(sendFinalBufferToGAteway,"0");
+{
+[; ;motion_control.c: 381: strcpy(sendFinalBufferToGAteway,"MT");
 "381
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 32C ]
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 30C ]
 [; ;motion_control.c: 382: strcat(sendFinalBufferToGAteway,".");
 "382
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 33C ]
-[; ;motion_control.c: 383: strcat(sendFinalBufferToGAteway,"1");
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 31C ]
+[; ;motion_control.c: 383: strcat(sendFinalBufferToGAteway,"4");
 "383
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 34C ]
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 32C ]
 [; ;motion_control.c: 384: strcat(sendFinalBufferToGAteway,".");
 "384
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 35C ]
-[; ;motion_control.c: 385: strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 33C ]
+[; ;motion_control.c: 385: strcat(sendFinalBufferToGAteway,"ACTACK");
 "385
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 36C ]
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 37C ]
-[; ;motion_control.c: 386: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 34C ]
+[; ;motion_control.c: 386: strcat(sendFinalBufferToGAteway,".");
 "386
-[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
-[; ;motion_control.c: 388: PORTAbits.RA2=0;
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 35C ]
+[; ;motion_control.c: 387: strcat(sendFinalBufferToGAteway,"0");
+"387
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 36C ]
+[; ;motion_control.c: 388: strcat(sendFinalBufferToGAteway,".");
 "388
-[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 37C ]
+[; ;motion_control.c: 389: strcat(sendFinalBufferToGAteway,"1");
 "389
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 38C ]
+[; ;motion_control.c: 390: strcat(sendFinalBufferToGAteway,".");
+"390
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 39C ]
+[; ;motion_control.c: 391: strcat(sendFinalBufferToGAteway,"1");
+"391
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 40C ]
+[; ;motion_control.c: 392: strcat(sendFinalBufferToGAteway,".");
+"392
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 41C ]
+[; ;motion_control.c: 393: strcat(sendFinalBufferToGAteway,"1000|");
+"393
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 42C ]
+[; ;motion_control.c: 395: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"395
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 397: PORTAbits.RA2=0;
+"397
+[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+"398
 }
 [e :U 498 ]
-[; ;motion_control.c: 389: }
-[; ;motion_control.c: 390: man=0;
-"390
+[; ;motion_control.c: 398: }
+[; ;motion_control.c: 399: man=0;
+"399
 [e = _man -> 0 `i ]
-[; ;motion_control.c: 391: M4=1;
-"391
+[; ;motion_control.c: 400: M4=1;
+"400
 [e = _M4 -> -> 1 `i `ui ]
-"393
+"402
 }
 [e :U 497 ]
-[; ;motion_control.c: 393: }
-[; ;motion_control.c: 395: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 1 && M4 == 1 )
-"395
-[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 1 `i == _M4 -> -> 1 `i `ui 499  ]
-[; ;motion_control.c: 396: {
-"396
-{
-[; ;motion_control.c: 397: MotionDataFlag = 0;
-"397
-[e = _MotionDataFlag -> 0 `i ]
-[; ;motion_control.c: 398: if(man==1)
-"398
-[e $ ! == _man -> 1 `i 500  ]
-[; ;motion_control.c: 399: {
-"399
-{
-[; ;motion_control.c: 400: strcpy(sendFinalBufferToGAteway,"MT");
-"400
-[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 38C ]
-[; ;motion_control.c: 401: strcat(sendFinalBufferToGAteway,".");
-"401
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 39C ]
-[; ;motion_control.c: 402: strcat(sendFinalBufferToGAteway,"4");
-"402
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 40C ]
-[; ;motion_control.c: 403: strcat(sendFinalBufferToGAteway,".");
-"403
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 41C ]
-[; ;motion_control.c: 404: strcat(sendFinalBufferToGAteway,"ACKACT");
+[; ;motion_control.c: 402: }
+[; ;motion_control.c: 404: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 1 && M4 == 1 )
 "404
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 42C ]
-[; ;motion_control.c: 405: strcat(sendFinalBufferToGAteway,".");
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 1 `i == _M4 -> -> 1 `i `ui 499  ]
+[; ;motion_control.c: 405: {
 "405
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 43C ]
-[; ;motion_control.c: 406: strcat(sendFinalBufferToGAteway,"1");
+{
+[; ;motion_control.c: 406: MotionDataFlag = 0;
 "406
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 44C ]
-[; ;motion_control.c: 407: strcat(sendFinalBufferToGAteway,".");
+[e = _MotionDataFlag -> 0 `i ]
+[; ;motion_control.c: 407: if(man==1)
 "407
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 45C ]
-[; ;motion_control.c: 408: strcat(sendFinalBufferToGAteway,"1");
+[e $ ! == _man -> 1 `i 500  ]
+[; ;motion_control.c: 408: {
 "408
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 46C ]
-[; ;motion_control.c: 409: strcat(sendFinalBufferToGAteway,".");
+{
+[; ;motion_control.c: 409: strcpy(sendFinalBufferToGAteway,"MT");
 "409
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 47C ]
-[; ;motion_control.c: 410: strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 43C ]
+[; ;motion_control.c: 410: strcat(sendFinalBufferToGAteway,".");
 "410
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 48C ]
-[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 49C ]
-[; ;motion_control.c: 412: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 44C ]
+[; ;motion_control.c: 411: strcat(sendFinalBufferToGAteway,"4");
+"411
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 45C ]
+[; ;motion_control.c: 412: strcat(sendFinalBufferToGAteway,".");
 "412
-[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
-[; ;motion_control.c: 414: PORTAbits.RA2=1;
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 46C ]
+[; ;motion_control.c: 413: strcat(sendFinalBufferToGAteway,"ACTACK");
+"413
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 47C ]
+[; ;motion_control.c: 414: strcat(sendFinalBufferToGAteway,".");
 "414
-[e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 48C ]
+[; ;motion_control.c: 415: strcat(sendFinalBufferToGAteway,"1");
 "415
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 49C ]
+[; ;motion_control.c: 416: strcat(sendFinalBufferToGAteway,".");
+"416
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 50C ]
+[; ;motion_control.c: 417: strcat(sendFinalBufferToGAteway,"1");
+"417
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 51C ]
+[; ;motion_control.c: 418: strcat(sendFinalBufferToGAteway,".");
+"418
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 52C ]
+[; ;motion_control.c: 419: strcat(sendFinalBufferToGAteway,"1");
+"419
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 53C ]
+[; ;motion_control.c: 420: strcat(sendFinalBufferToGAteway,".");
+"420
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 54C ]
+[; ;motion_control.c: 421: strcat(sendFinalBufferToGAteway,"1000|");
+"421
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 55C ]
+[; ;motion_control.c: 424: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"424
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 426: PORTAbits.RA2=1;
+"426
+[e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
+"427
 }
 [e :U 500 ]
-[; ;motion_control.c: 415: }
-[; ;motion_control.c: 416: man=0;
-"416
+[; ;motion_control.c: 427: }
+[; ;motion_control.c: 428: man=0;
+"428
 [e = _man -> 0 `i ]
-[; ;motion_control.c: 417: M4=0;
-"417
+[; ;motion_control.c: 429: M4=0;
+"429
 [e = _M4 -> -> 0 `i `ui ]
-"419
+"431
 }
 [e :U 499 ]
-"421
+"435
 }
 [e :U 474 ]
-"209
+"212
 [e $U 475  ]
 [e :U 476 ]
-[; ;motion_control.c: 419: }
-[; ;motion_control.c: 421: }
-[; ;motion_control.c: 422: }
-"422
+[; ;motion_control.c: 431: }
+[; ;motion_control.c: 435: }
+[; ;motion_control.c: 436: }
+"436
 [e :UE 473 ]
 }
-"424
-[v _applianceControl `(v ~T0 @X0 1 ef7`uc`uc`uc`uc`uc`uc`uc ]
-"425
+"437
+[v _MotionControl `(v ~T0 @X0 1 ef1`uc ]
+"438
 {
-[; ;motion_control.c: 424: void applianceControl(char charSwitchMSB, char charSwitchLSB, char charSwitchSTATE, char chDimmerSpeedMSB, char chDimmerSpeedLSB,
-[; ;motion_control.c: 425: char charParentalControl, char charFinalFrameState){
+[; ;motion_control.c: 437: void MotionControl(char status)
+[; ;motion_control.c: 438: {
+[e :U _MotionControl ]
+"437
+[v _status `uc ~T0 @X0 1 r1 ]
+"438
+[f ]
+[; ;motion_control.c: 439: if(status == '1' ){
+"439
+[e $ ! == -> _status `ui -> 49 `ui 502  ]
+{
+"441
+[v _man `i ~T0 @X0 1 a ]
+[; ;motion_control.c: 441: int man=1;
+[e = _man -> 1 `i ]
+[; ;motion_control.c: 444: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 )
+"444
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 0 `i == _M3 -> -> 0 `i `ui 503  ]
+[; ;motion_control.c: 445: {
+"445
+{
+[; ;motion_control.c: 446: if(man == 1)
+"446
+[e $ ! == _man -> 1 `i 504  ]
+[; ;motion_control.c: 447: {
+"447
+{
+[; ;motion_control.c: 449: strcpy(sendFinalBufferToGAteway,"MT");
+"449
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 56C ]
+[; ;motion_control.c: 450: strcat(sendFinalBufferToGAteway,".");
+"450
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 57C ]
+[; ;motion_control.c: 451: strcat(sendFinalBufferToGAteway,"3");
+"451
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 58C ]
+[; ;motion_control.c: 452: strcat(sendFinalBufferToGAteway,".");
+"452
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 59C ]
+[; ;motion_control.c: 453: strcat(sendFinalBufferToGAteway,"ACTACK");
+"453
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 60C ]
+[; ;motion_control.c: 454: strcat(sendFinalBufferToGAteway,".");
+"454
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 61C ]
+[; ;motion_control.c: 455: strcat(sendFinalBufferToGAteway,"0");
+"455
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 62C ]
+[; ;motion_control.c: 456: strcat(sendFinalBufferToGAteway,".");
+"456
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 63C ]
+[; ;motion_control.c: 457: strcat(sendFinalBufferToGAteway,"1");
+"457
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 64C ]
+[; ;motion_control.c: 458: strcat(sendFinalBufferToGAteway,".");
+"458
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 65C ]
+[; ;motion_control.c: 459: strcat(sendFinalBufferToGAteway,"1000|");
+"459
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 66C ]
+[; ;motion_control.c: 461: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"461
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 463: PORTAbits.RA3=0;
+"463
+[e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
+"464
+}
+[e :U 504 ]
+[; ;motion_control.c: 464: }
+[; ;motion_control.c: 465: man=0;
+"465
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 466: M3=1;
+"466
+[e = _M3 -> -> 1 `i `ui ]
+"468
+}
+[e :U 503 ]
+[; ;motion_control.c: 468: }
+[; ;motion_control.c: 470: if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1)
+"470
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 3 `i -> 1 `i == _M3 -> -> 1 `i `ui 505  ]
+[; ;motion_control.c: 471: {
+"471
+{
+[; ;motion_control.c: 473: if(man==1)
+"473
+[e $ ! == _man -> 1 `i 506  ]
+[; ;motion_control.c: 474: {
+"474
+{
+[; ;motion_control.c: 476: strcpy(sendFinalBufferToGAteway,"MT");
+"476
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 67C ]
+[; ;motion_control.c: 477: strcat(sendFinalBufferToGAteway,".");
+"477
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 68C ]
+[; ;motion_control.c: 478: strcat(sendFinalBufferToGAteway,"3");
+"478
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 69C ]
+[; ;motion_control.c: 479: strcat(sendFinalBufferToGAteway,".");
+"479
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 70C ]
+[; ;motion_control.c: 480: strcat(sendFinalBufferToGAteway,"ACTACK");
+"480
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 71C ]
+[; ;motion_control.c: 481: strcat(sendFinalBufferToGAteway,".");
+"481
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 72C ]
+[; ;motion_control.c: 482: strcat(sendFinalBufferToGAteway,"1");
+"482
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 73C ]
+[; ;motion_control.c: 483: strcat(sendFinalBufferToGAteway,".");
+"483
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 74C ]
+[; ;motion_control.c: 484: strcat(sendFinalBufferToGAteway,"1");
+"484
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 75C ]
+[; ;motion_control.c: 485: strcat(sendFinalBufferToGAteway,".");
+"485
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 76C ]
+[; ;motion_control.c: 486: strcat(sendFinalBufferToGAteway,"1000|");
+"486
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 77C ]
+[; ;motion_control.c: 488: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"488
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 490: PORTAbits.RA3=1;
+"490
+[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+"491
+}
+[e :U 506 ]
+[; ;motion_control.c: 491: }
+[; ;motion_control.c: 492: man=0;
+"492
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 493: M3=0;
+"493
+[e = _M3 -> -> 0 `i `ui ]
+"495
+}
+[e :U 505 ]
+[; ;motion_control.c: 495: }
+[; ;motion_control.c: 500: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 )
+"500
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 0 `i == _M4 -> -> 0 `i `ui 507  ]
+[; ;motion_control.c: 501: {
+"501
+{
+[; ;motion_control.c: 502: if(man==1)
+"502
+[e $ ! == _man -> 1 `i 508  ]
+[; ;motion_control.c: 503: {
+"503
+{
+[; ;motion_control.c: 504: strcpy(sendFinalBufferToGAteway,"MT");
+"504
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 78C ]
+[; ;motion_control.c: 505: strcat(sendFinalBufferToGAteway,".");
+"505
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 79C ]
+[; ;motion_control.c: 506: strcat(sendFinalBufferToGAteway,"4");
+"506
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 80C ]
+[; ;motion_control.c: 507: strcat(sendFinalBufferToGAteway,".");
+"507
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 81C ]
+[; ;motion_control.c: 508: strcat(sendFinalBufferToGAteway,"ACTACK");
+"508
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 82C ]
+[; ;motion_control.c: 509: strcat(sendFinalBufferToGAteway,".");
+"509
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 83C ]
+[; ;motion_control.c: 510: strcat(sendFinalBufferToGAteway,"0");
+"510
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 84C ]
+[; ;motion_control.c: 511: strcat(sendFinalBufferToGAteway,".");
+"511
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 85C ]
+[; ;motion_control.c: 512: strcat(sendFinalBufferToGAteway,"1");
+"512
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 86C ]
+[; ;motion_control.c: 513: strcat(sendFinalBufferToGAteway,".");
+"513
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 87C ]
+[; ;motion_control.c: 514: strcat(sendFinalBufferToGAteway,"1");
+"514
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 88C ]
+[; ;motion_control.c: 515: strcat(sendFinalBufferToGAteway,".");
+"515
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 89C ]
+[; ;motion_control.c: 516: strcat(sendFinalBufferToGAteway,"1000|");
+"516
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 90C ]
+[; ;motion_control.c: 518: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"518
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 520: PORTAbits.RA2=0;
+"520
+[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+"521
+}
+[e :U 508 ]
+[; ;motion_control.c: 521: }
+[; ;motion_control.c: 522: man=0;
+"522
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 523: M4=1;
+"523
+[e = _M4 -> -> 1 `i `ui ]
+"525
+}
+[e :U 507 ]
+[; ;motion_control.c: 525: }
+[; ;motion_control.c: 527: if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 1 && M4 == 1 )
+"527
+[e $ ! && && == -> *U + &U _parentalLockBuffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux `ui -> 48 `ui == -> . . _PORTFbits 0 2 `i -> 1 `i == _M4 -> -> 1 `i `ui 509  ]
+[; ;motion_control.c: 528: {
+"528
+{
+[; ;motion_control.c: 529: MotionDataFlag = 0;
+"529
+[e = _MotionDataFlag -> 0 `i ]
+[; ;motion_control.c: 530: if(man==1)
+"530
+[e $ ! == _man -> 1 `i 510  ]
+[; ;motion_control.c: 531: {
+"531
+{
+[; ;motion_control.c: 532: strcpy(sendFinalBufferToGAteway,"MT");
+"532
+[e ( _strcpy (2 , &U _sendFinalBufferToGAteway :s 91C ]
+[; ;motion_control.c: 533: strcat(sendFinalBufferToGAteway,".");
+"533
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 92C ]
+[; ;motion_control.c: 534: strcat(sendFinalBufferToGAteway,"4");
+"534
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 93C ]
+[; ;motion_control.c: 535: strcat(sendFinalBufferToGAteway,".");
+"535
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 94C ]
+[; ;motion_control.c: 536: strcat(sendFinalBufferToGAteway,"ACTACK");
+"536
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 95C ]
+[; ;motion_control.c: 537: strcat(sendFinalBufferToGAteway,".");
+"537
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 96C ]
+[; ;motion_control.c: 538: strcat(sendFinalBufferToGAteway,"1");
+"538
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 97C ]
+[; ;motion_control.c: 539: strcat(sendFinalBufferToGAteway,".");
+"539
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 98C ]
+[; ;motion_control.c: 540: strcat(sendFinalBufferToGAteway,"1");
+"540
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 99C ]
+[; ;motion_control.c: 541: strcat(sendFinalBufferToGAteway,".");
+"541
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 100C ]
+[; ;motion_control.c: 542: strcat(sendFinalBufferToGAteway,"1");
+"542
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 101C ]
+[; ;motion_control.c: 543: strcat(sendFinalBufferToGAteway,".");
+"543
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 102C ]
+[; ;motion_control.c: 544: strcat(sendFinalBufferToGAteway,"1000|");
+"544
+[e ( _strcat (2 , &U _sendFinalBufferToGAteway :s 103C ]
+[; ;motion_control.c: 547: sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+"547
+[e ( _sendAcknowledgmentTOMotion (1 &U _sendFinalBufferToGAteway ]
+[; ;motion_control.c: 549: PORTAbits.RA2=1;
+"549
+[e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
+"550
+}
+[e :U 510 ]
+[; ;motion_control.c: 550: }
+[; ;motion_control.c: 551: man=0;
+"551
+[e = _man -> 0 `i ]
+[; ;motion_control.c: 552: M4=0;
+"552
+[e = _M4 -> -> 0 `i `ui ]
+"554
+}
+[e :U 509 ]
+"556
+}
+[e :U 502 ]
+[; ;motion_control.c: 554: }
+[; ;motion_control.c: 556: }
+[; ;motion_control.c: 558: }
+"558
+[e :UE 501 ]
+}
+"559
+[v _applianceControl `(v ~T0 @X0 1 ef7`uc`uc`uc`uc`uc`uc`uc ]
+"560
+{
+[; ;motion_control.c: 559: void applianceControl(char charSwitchMSB, char charSwitchLSB, char charSwitchSTATE, char chDimmerSpeedMSB, char chDimmerSpeedLSB,
+[; ;motion_control.c: 560: char charParentalControl, char charFinalFrameState){
 [e :U _applianceControl ]
-"424
+"559
 [v _charSwitchMSB `uc ~T0 @X0 1 r1 ]
 [v _charSwitchLSB `uc ~T0 @X0 1 r2 ]
 [v _charSwitchSTATE `uc ~T0 @X0 1 r3 ]
 [v _chDimmerSpeedMSB `uc ~T0 @X0 1 r4 ]
 [v _chDimmerSpeedLSB `uc ~T0 @X0 1 r5 ]
-"425
+"560
 [v _charParentalControl `uc ~T0 @X0 1 r6 ]
 [v _charFinalFrameState `uc ~T0 @X0 1 r7 ]
 [f ]
-"428
+"563
 [v _integerSwitchNumber `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 428: int integerSwitchNumber = 0;
+[; ;motion_control.c: 563: int integerSwitchNumber = 0;
 [e = _integerSwitchNumber -> 0 `i ]
-"429
+"564
 [v _integerSwitchState `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 429: int integerSwitchState = 0;
+[; ;motion_control.c: 564: int integerSwitchState = 0;
 [e = _integerSwitchState -> 0 `i ]
-"430
+"565
 [v _integerSpeed `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 430: int integerSpeed = 0;
+[; ;motion_control.c: 565: int integerSpeed = 0;
 [e = _integerSpeed -> 0 `i ]
-"431
+"566
 [v _currentStateBufferPositions `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 431: int currentStateBufferPositions=0;
+[; ;motion_control.c: 566: int currentStateBufferPositions=0;
 [e = _currentStateBufferPositions -> 0 `i ]
-[v F3830 `uc ~T0 @X0 -> 2 `i s ]
-[i F3830
+[v F3836 `uc ~T0 @X0 -> 2 `i s ]
+[i F3836
 :U ..
 -> 35 `c
 -> 0 `c
 ..
 ]
-"434
+"569
 [v _switchNumberStringBuffer `uc ~T0 @X0 -> 2 `i a ]
-[; ;motion_control.c: 434: char switchNumberStringBuffer[2]="#";
-[e = _switchNumberStringBuffer F3830 ]
-[v F3832 `uc ~T0 @X0 -> 2 `i s ]
-[i F3832
+[; ;motion_control.c: 569: char switchNumberStringBuffer[2]="#";
+[e = _switchNumberStringBuffer F3836 ]
+[v F3838 `uc ~T0 @X0 -> 2 `i s ]
+[i F3838
 :U ..
 -> 35 `c
 -> 0 `c
 ..
 ]
-"435
+"570
 [v _dimmerSpeedStringBuffer `uc ~T0 @X0 -> 2 `i a ]
-[; ;motion_control.c: 435: char dimmerSpeedStringBuffer[2]="#";
-[e = _dimmerSpeedStringBuffer F3832 ]
-[; ;motion_control.c: 437: switchNumberStringBuffer[0]=charSwitchMSB;
-"437
+[; ;motion_control.c: 570: char dimmerSpeedStringBuffer[2]="#";
+[e = _dimmerSpeedStringBuffer F3838 ]
+[; ;motion_control.c: 572: switchNumberStringBuffer[0]=charSwitchMSB;
+"572
 [e = *U + &U _switchNumberStringBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _switchNumberStringBuffer `ui `ux _charSwitchMSB ]
-[; ;motion_control.c: 438: switchNumberStringBuffer[1]=charSwitchLSB;
-"438
+[; ;motion_control.c: 573: switchNumberStringBuffer[1]=charSwitchLSB;
+"573
 [e = *U + &U _switchNumberStringBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _switchNumberStringBuffer `ui `ux _charSwitchLSB ]
-[; ;motion_control.c: 439: integerSwitchNumber = atoi(switchNumberStringBuffer);
-"439
+[; ;motion_control.c: 574: integerSwitchNumber = atoi(switchNumberStringBuffer);
+"574
 [e = _integerSwitchNumber ( _atoi (1 -> &U _switchNumberStringBuffer `*Cuc ]
-[; ;motion_control.c: 443: integerSwitchState = charSwitchSTATE-'0';
-"443
+[; ;motion_control.c: 578: integerSwitchState = charSwitchSTATE-'0';
+"578
 [e = _integerSwitchState -> - -> _charSwitchSTATE `ui -> 48 `ui `i ]
-[; ;motion_control.c: 446: dimmerSpeedStringBuffer[0]=chDimmerSpeedMSB;
-"446
+[; ;motion_control.c: 581: dimmerSpeedStringBuffer[0]=chDimmerSpeedMSB;
+"581
 [e = *U + &U _dimmerSpeedStringBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _dimmerSpeedStringBuffer `ui `ux _chDimmerSpeedMSB ]
-[; ;motion_control.c: 447: dimmerSpeedStringBuffer[1]=chDimmerSpeedLSB;
-"447
+[; ;motion_control.c: 582: dimmerSpeedStringBuffer[1]=chDimmerSpeedLSB;
+"582
 [e = *U + &U _dimmerSpeedStringBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _dimmerSpeedStringBuffer `ui `ux _chDimmerSpeedLSB ]
-[; ;motion_control.c: 448: integerSpeed = atoi(dimmerSpeedStringBuffer);
-"448
+[; ;motion_control.c: 583: integerSpeed = atoi(dimmerSpeedStringBuffer);
+"583
 [e = _integerSpeed ( _atoi (1 -> &U _dimmerSpeedStringBuffer `*Cuc ]
-[; ;motion_control.c: 452: parentalLockBuffer[integerSwitchNumber] = charParentalControl;
-"452
+[; ;motion_control.c: 587: parentalLockBuffer[integerSwitchNumber] = charParentalControl;
+"587
 [e = *U + &U _parentalLockBuffer * -> -> _integerSwitchNumber `ui `ux -> -> # *U &U _parentalLockBuffer `ui `ux _charParentalControl ]
-[; ;motion_control.c: 456: currentStateBufferPositions = ((1+4*(integerSwitchNumber))-5);
-"456
+[; ;motion_control.c: 591: currentStateBufferPositions = ((1+4*(integerSwitchNumber))-5);
+"591
 [e = _currentStateBufferPositions - + -> 1 `i * -> 4 `i _integerSwitchNumber -> 5 `i ]
-[; ;motion_control.c: 457: currentStateBuffer[currentStateBufferPositions++] = 'G';
-"457
+[; ;motion_control.c: 592: currentStateBuffer[currentStateBufferPositions++] = 'G';
+"592
 [e = *U + &U _currentStateBuffer * -> -> ++ _currentStateBufferPositions -> 1 `i `ui `ux -> -> # *U &U _currentStateBuffer `ui `ux -> -> 71 `ui `uc ]
-[; ;motion_control.c: 458: currentStateBuffer[currentStateBufferPositions++] = charSwitchSTATE;
-"458
+[; ;motion_control.c: 593: currentStateBuffer[currentStateBufferPositions++] = charSwitchSTATE;
+"593
 [e = *U + &U _currentStateBuffer * -> -> ++ _currentStateBufferPositions -> 1 `i `ui `ux -> -> # *U &U _currentStateBuffer `ui `ux _charSwitchSTATE ]
-[; ;motion_control.c: 459: currentStateBuffer[currentStateBufferPositions++] = charSwitchMSB;
-"459
+[; ;motion_control.c: 594: currentStateBuffer[currentStateBufferPositions++] = charSwitchMSB;
+"594
 [e = *U + &U _currentStateBuffer * -> -> ++ _currentStateBufferPositions -> 1 `i `ui `ux -> -> # *U &U _currentStateBuffer `ui `ux _charSwitchMSB ]
-[; ;motion_control.c: 460: currentStateBuffer[currentStateBufferPositions] = charSwitchLSB;
-"460
+[; ;motion_control.c: 595: currentStateBuffer[currentStateBufferPositions] = charSwitchLSB;
+"595
 [e = *U + &U _currentStateBuffer * -> -> _currentStateBufferPositions `ui `ux -> -> # *U &U _currentStateBuffer `ui `ux _charSwitchLSB ]
-[; ;motion_control.c: 462: currentStateBufferPositions-=3;
-"462
+[; ;motion_control.c: 597: currentStateBufferPositions-=3;
+"597
 [e =- _currentStateBufferPositions -> 3 `i ]
-[; ;motion_control.c: 463: if(charFinalFrameState=='1')
-"463
-[e $ ! == -> _charFinalFrameState `ui -> 49 `ui 502  ]
-[; ;motion_control.c: 464: {
-"464
+[; ;motion_control.c: 598: if(charFinalFrameState=='1')
+"598
+[e $ ! == -> _charFinalFrameState `ui -> 49 `ui 512  ]
+[; ;motion_control.c: 599: {
+"599
 {
-[; ;motion_control.c: 465: sendAcknowledgment(currentStateBuffer+currentStateBufferPositions);
-"465
+[; ;motion_control.c: 600: sendAcknowledgment(currentStateBuffer+currentStateBufferPositions);
+"600
 [e ( _sendAcknowledgment (1 + &U _currentStateBuffer * -> _currentStateBufferPositions `x -> -> # *U &U _currentStateBuffer `i `x ]
-"466
+"601
 }
-[e :U 502 ]
-[; ;motion_control.c: 466: }
-[; ;motion_control.c: 468: switch(integerSwitchNumber){
-"468
-[e $U 504  ]
+[e :U 512 ]
+[; ;motion_control.c: 601: }
+[; ;motion_control.c: 603: switch(integerSwitchNumber){
+"603
+[e $U 514  ]
 {
-[; ;motion_control.c: 469: case 1:
-"469
-[e :U 505 ]
-[; ;motion_control.c: 470: {
-"470
+[; ;motion_control.c: 604: case 1:
+"604
+[e :U 515 ]
+[; ;motion_control.c: 605: {
+"605
 {
-[; ;motion_control.c: 472: PORTFbits.RF1 = integerSwitchState;
-"472
+[; ;motion_control.c: 607: PORTFbits.RF1 = integerSwitchState;
+"607
 [e = . . _PORTFbits 0 1 -> _integerSwitchState `uc ]
-"473
+"608
 }
-[; ;motion_control.c: 473: }
-[; ;motion_control.c: 474: break;
-"474
-[e $U 503  ]
-[; ;motion_control.c: 475: case 2:
-"475
-[e :U 506 ]
-[; ;motion_control.c: 476: {
-"476
+[; ;motion_control.c: 608: }
+[; ;motion_control.c: 609: break;
+"609
+[e $U 513  ]
+[; ;motion_control.c: 610: case 2:
+"610
+[e :U 516 ]
+[; ;motion_control.c: 611: {
+"611
 {
-[; ;motion_control.c: 477: PORTFbits.RF0 = integerSwitchState;
-"477
+[; ;motion_control.c: 612: PORTFbits.RF0 = integerSwitchState;
+"612
 [e = . . _PORTFbits 0 0 -> _integerSwitchState `uc ]
-[; ;motion_control.c: 478: break;
-"478
-[e $U 503  ]
-"479
+[; ;motion_control.c: 613: break;
+"613
+[e $U 513  ]
+"614
 }
-[; ;motion_control.c: 479: }
-[; ;motion_control.c: 480: case 3:
-"480
-[e :U 507 ]
-[; ;motion_control.c: 481: {
-"481
+[; ;motion_control.c: 614: }
+[; ;motion_control.c: 615: case 3:
+"615
+[e :U 517 ]
+[; ;motion_control.c: 616: {
+"616
 {
-[; ;motion_control.c: 482: PORTAbits.RA3 = integerSwitchState;
-"482
+[; ;motion_control.c: 617: PORTAbits.RA3 = integerSwitchState;
+"617
 [e = . . _PORTAbits 0 3 -> _integerSwitchState `uc ]
-"484
+"619
 }
-[; ;motion_control.c: 484: }
-[; ;motion_control.c: 485: break;
-"485
-[e $U 503  ]
-[; ;motion_control.c: 487: case 4:
-"487
-[e :U 508 ]
-[; ;motion_control.c: 488: {
-"488
+[; ;motion_control.c: 619: }
+[; ;motion_control.c: 620: break;
+"620
+[e $U 513  ]
+[; ;motion_control.c: 622: case 4:
+"622
+[e :U 518 ]
+[; ;motion_control.c: 623: {
+"623
 {
-[; ;motion_control.c: 489: PORTAbits.RA2 = integerSwitchState;
-"489
+[; ;motion_control.c: 624: PORTAbits.RA2 = integerSwitchState;
+"624
 [e = . . _PORTAbits 0 2 -> _integerSwitchState `uc ]
-"490
+"625
 }
-[; ;motion_control.c: 490: }
-[; ;motion_control.c: 491: break;
-"491
-[e $U 503  ]
-[; ;motion_control.c: 492: default:
-"492
-[e :U 509 ]
-[; ;motion_control.c: 493: break;
-"493
-[e $U 503  ]
-"494
+[; ;motion_control.c: 625: }
+[; ;motion_control.c: 626: break;
+"626
+[e $U 513  ]
+[; ;motion_control.c: 627: default:
+"627
+[e :U 519 ]
+[; ;motion_control.c: 628: break;
+"628
+[e $U 513  ]
+"629
 }
-[; ;motion_control.c: 494: }
-[e $U 503  ]
-"468
-[e :U 504 ]
-[e [\ _integerSwitchNumber , $ -> 1 `i 505
- , $ -> 2 `i 506
- , $ -> 3 `i 507
- , $ -> 4 `i 508
- 509 ]
-"494
-[e :U 503 ]
-[; ;motion_control.c: 496: }
-"496
-[e :UE 501 ]
-}
-"502
-[v _GPIO_pin_Initialize `(v ~T0 @X0 1 ef ]
-{
-[; ;motion_control.c: 502: void GPIO_pin_Initialize(){
-[e :U _GPIO_pin_Initialize ]
-[f ]
-[; ;motion_control.c: 503: clearAllPorts();
-"503
-[e ( _clearAllPorts ..  ]
-[; ;motion_control.c: 504: pinINIT_extra();
-"504
-[e ( _pinINIT_extra ..  ]
-[; ;motion_control.c: 505: TRISFbits.TRISF7 = 1;
-"505
-[e = . . _TRISFbits 0 7 -> -> 1 `i `uc ]
-[; ;motion_control.c: 506: TRISFbits.TRISF5 = 1;
-"506
-[e = . . _TRISFbits 0 5 -> -> 1 `i `uc ]
-[; ;motion_control.c: 507: TRISFbits.TRISF3 = 1;
-"507
-[e = . . _TRISFbits 0 3 -> -> 1 `i `uc ]
-[; ;motion_control.c: 508: TRISFbits.TRISF2 = 1;
-"508
-[e = . . _TRISFbits 0 2 -> -> 1 `i `uc ]
-[; ;motion_control.c: 511: TRISFbits.TRISF1 = 0;
-"511
-[e = . . _TRISFbits 0 1 -> -> 0 `i `uc ]
-[; ;motion_control.c: 512: TRISFbits.TRISF0 = 0;
-"512
-[e = . . _TRISFbits 0 0 -> -> 0 `i `uc ]
-[; ;motion_control.c: 513: TRISAbits.TRISA3 = 0;
-"513
-[e = . . _TRISAbits 0 3 -> -> 0 `i `uc ]
-[; ;motion_control.c: 514: TRISAbits.TRISA2 = 0;
-"514
-[e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
-[; ;motion_control.c: 520: TRISCbits.TRISC6 = 0;
-"520
-[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
-[; ;motion_control.c: 521: TRISCbits.TRISC7 = 1;
-"521
-[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
-[; ;motion_control.c: 523: clearAllPorts();
-"523
-[e ( _clearAllPorts ..  ]
-[; ;motion_control.c: 524: }
-"524
-[e :UE 510 ]
-}
-"529
-[v _allPeripheralInit `(v ~T0 @X0 1 ef ]
-{
-[; ;motion_control.c: 529: void allPeripheralInit(){
-[e :U _allPeripheralInit ]
-[f ]
-[; ;motion_control.c: 530: EUSART_Initialize();
-"530
-[e ( _EUSART_Initialize ..  ]
-[; ;motion_control.c: 532: }
-"532
+[; ;motion_control.c: 629: }
+[e $U 513  ]
+"603
+[e :U 514 ]
+[e [\ _integerSwitchNumber , $ -> 1 `i 515
+ , $ -> 2 `i 516
+ , $ -> 3 `i 517
+ , $ -> 4 `i 518
+ 519 ]
+"629
+[e :U 513 ]
+[; ;motion_control.c: 631: }
+"631
 [e :UE 511 ]
 }
-"537
+"637
+[v _GPIO_pin_Initialize `(v ~T0 @X0 1 ef ]
+{
+[; ;motion_control.c: 637: void GPIO_pin_Initialize(){
+[e :U _GPIO_pin_Initialize ]
+[f ]
+[; ;motion_control.c: 638: clearAllPorts();
+"638
+[e ( _clearAllPorts ..  ]
+[; ;motion_control.c: 639: pinINIT_extra();
+"639
+[e ( _pinINIT_extra ..  ]
+[; ;motion_control.c: 640: TRISFbits.TRISF7 = 1;
+"640
+[e = . . _TRISFbits 0 7 -> -> 1 `i `uc ]
+[; ;motion_control.c: 641: TRISFbits.TRISF5 = 1;
+"641
+[e = . . _TRISFbits 0 5 -> -> 1 `i `uc ]
+[; ;motion_control.c: 642: TRISFbits.TRISF3 = 1;
+"642
+[e = . . _TRISFbits 0 3 -> -> 1 `i `uc ]
+[; ;motion_control.c: 643: TRISFbits.TRISF2 = 1;
+"643
+[e = . . _TRISFbits 0 2 -> -> 1 `i `uc ]
+[; ;motion_control.c: 646: TRISFbits.TRISF1 = 0;
+"646
+[e = . . _TRISFbits 0 1 -> -> 0 `i `uc ]
+[; ;motion_control.c: 647: TRISFbits.TRISF0 = 0;
+"647
+[e = . . _TRISFbits 0 0 -> -> 0 `i `uc ]
+[; ;motion_control.c: 648: TRISAbits.TRISA3 = 0;
+"648
+[e = . . _TRISAbits 0 3 -> -> 0 `i `uc ]
+[; ;motion_control.c: 649: TRISAbits.TRISA2 = 0;
+"649
+[e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
+[; ;motion_control.c: 655: TRISCbits.TRISC6 = 0;
+"655
+[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
+[; ;motion_control.c: 656: TRISCbits.TRISC7 = 1;
+"656
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+[; ;motion_control.c: 658: clearAllPorts();
+"658
+[e ( _clearAllPorts ..  ]
+[; ;motion_control.c: 659: }
+"659
+[e :UE 520 ]
+}
+"664
+[v _allPeripheralInit `(v ~T0 @X0 1 ef ]
+{
+[; ;motion_control.c: 664: void allPeripheralInit(){
+[e :U _allPeripheralInit ]
+[f ]
+[; ;motion_control.c: 665: EUSART_Initialize();
+"665
+[e ( _EUSART_Initialize ..  ]
+[; ;motion_control.c: 667: }
+"667
+[e :UE 521 ]
+}
+"672
 [v _EUSART_Initialize `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 537: void EUSART_Initialize(){
+[; ;motion_control.c: 672: void EUSART_Initialize(){
 [e :U _EUSART_Initialize ]
 [f ]
-[; ;motion_control.c: 538: PIE1bits.RC1IE = 0;
-"538
+[; ;motion_control.c: 673: PIE1bits.RC1IE = 0;
+"673
 [e = . . _PIE1bits 0 5 -> -> 0 `i `uc ]
-[; ;motion_control.c: 539: PIE1bits.TX1IE = 0;
-"539
+[; ;motion_control.c: 674: PIE1bits.TX1IE = 0;
+"674
 [e = . . _PIE1bits 0 4 -> -> 0 `i `uc ]
-[; ;motion_control.c: 544: BAUD1CON = 0x0A;
-"544
+[; ;motion_control.c: 679: BAUD1CON = 0x0A;
+"679
 [e = _BAUD1CON -> -> 10 `i `uc ]
-[; ;motion_control.c: 547: RC1STA = 0x90;
-"547
+[; ;motion_control.c: 682: RC1STA = 0x90;
+"682
 [e = _RC1STA -> -> 144 `i `uc ]
-[; ;motion_control.c: 550: TX1STA = 0x24;
-"550
+[; ;motion_control.c: 685: TX1STA = 0x24;
+"685
 [e = _TX1STA -> -> 36 `i `uc ]
-[; ;motion_control.c: 555: SP1BRGL = 0xA0;
-"555
+[; ;motion_control.c: 690: SP1BRGL = 0xA0;
+"690
 [e = _SP1BRGL -> -> 160 `i `uc ]
-[; ;motion_control.c: 557: SP1BRGH = 0x01;
-"557
+[; ;motion_control.c: 692: SP1BRGH = 0x01;
+"692
 [e = _SP1BRGH -> -> 1 `i `uc ]
-[; ;motion_control.c: 560: GIE = 1;
-"560
+[; ;motion_control.c: 695: GIE = 1;
+"695
 [e = _GIE -> -> 1 `i `b ]
-[; ;motion_control.c: 563: PEIE = 1;
-"563
+[; ;motion_control.c: 698: PEIE = 1;
+"698
 [e = _PEIE -> -> 1 `i `b ]
-[; ;motion_control.c: 566: PIE1bits.RC1IE = 1;
-"566
+[; ;motion_control.c: 701: PIE1bits.RC1IE = 1;
+"701
 [e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
-[; ;motion_control.c: 569: TX1STAbits.TXEN = 1;
-"569
+[; ;motion_control.c: 704: TX1STAbits.TXEN = 1;
+"704
 [e = . . _TX1STAbits 0 5 -> -> 1 `i `uc ]
-[; ;motion_control.c: 572: RC1STAbits.SPEN = 1;
-"572
+[; ;motion_control.c: 707: RC1STAbits.SPEN = 1;
+"707
 [e = . . _RC1STAbits 0 7 -> -> 1 `i `uc ]
-[; ;motion_control.c: 573: }
-"573
-[e :UE 512 ]
+[; ;motion_control.c: 708: }
+"708
+[e :UE 522 ]
 }
-"576
+"711
 [v _peripheralsEnable `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 576: void peripheralsEnable(){
+[; ;motion_control.c: 711: void peripheralsEnable(){
 [e :U _peripheralsEnable ]
 [f ]
-[; ;motion_control.c: 578: TX1STAbits.TXEN = 1;
-"578
+[; ;motion_control.c: 713: TX1STAbits.TXEN = 1;
+"713
 [e = . . _TX1STAbits 0 5 -> -> 1 `i `uc ]
-[; ;motion_control.c: 581: RC1STAbits.SPEN = 1;
-"581
+[; ;motion_control.c: 716: RC1STAbits.SPEN = 1;
+"716
 [e = . . _RC1STAbits 0 7 -> -> 1 `i `uc ]
-[; ;motion_control.c: 582: }
-"582
-[e :UE 513 ]
+[; ;motion_control.c: 717: }
+"717
+[e :UE 523 ]
 }
-"583
+"718
 [v _AllInterruptEnable `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 583: void AllInterruptEnable(){
+[; ;motion_control.c: 718: void AllInterruptEnable(){
 [e :U _AllInterruptEnable ]
 [f ]
-[; ;motion_control.c: 585: GIE = 1;
-"585
+[; ;motion_control.c: 720: GIE = 1;
+"720
 [e = _GIE -> -> 1 `i `b ]
-[; ;motion_control.c: 588: PEIE = 1;
-"588
+[; ;motion_control.c: 723: PEIE = 1;
+"723
 [e = _PEIE -> -> 1 `i `b ]
-[; ;motion_control.c: 591: PIE1bits.RC1IE = 1;
-"591
+[; ;motion_control.c: 726: PIE1bits.RC1IE = 1;
+"726
 [e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
-[; ;motion_control.c: 593: }
-"593
-[e :UE 514 ]
+[; ;motion_control.c: 728: }
+"728
+[e :UE 524 ]
 }
-"595
+"730
 [v _errorsISR `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;motion_control.c: 595: void errorsISR(char* errNum){
+[; ;motion_control.c: 730: void errorsISR(char* errNum){
 [e :U _errorsISR ]
 [v _errNum `*uc ~T0 @X0 1 r1 ]
 [f ]
-"596
+"731
 [v _Tx_count `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 596: int Tx_count=0;
+[; ;motion_control.c: 731: int Tx_count=0;
 [e = _Tx_count -> 0 `i ]
-[; ;motion_control.c: 597: while(Tx_count!=4)
-"597
-[e $U 516  ]
-[e :U 517 ]
-[; ;motion_control.c: 598: {
-"598
+[; ;motion_control.c: 732: while(Tx_count!=4)
+"732
+[e $U 526  ]
+[e :U 527 ]
+[; ;motion_control.c: 733: {
+"733
 {
-[; ;motion_control.c: 599: while (!TX1STAbits.TRMT);
-"599
-[e $U 519  ]
-[e :U 520 ]
-[e :U 519 ]
-[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 520  ]
-[e :U 521 ]
-[; ;motion_control.c: 600: TX1REG = *errNum;
-"600
+[; ;motion_control.c: 734: while (!TX1STAbits.TRMT);
+"734
+[e $U 529  ]
+[e :U 530 ]
+[e :U 529 ]
+[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 530  ]
+[e :U 531 ]
+[; ;motion_control.c: 735: TX1REG = *errNum;
+"735
 [e = _TX1REG *U _errNum ]
-[; ;motion_control.c: 601: *errNum++;
-"601
+[; ;motion_control.c: 736: *errNum++;
+"736
 [e *U ++ _errNum * -> -> 1 `i `x -> -> # *U _errNum `i `x ]
-[; ;motion_control.c: 602: Tx_count++;
-"602
+[; ;motion_control.c: 737: Tx_count++;
+"737
 [e ++ _Tx_count -> 1 `i ]
-"603
+"738
 }
-[e :U 516 ]
-"597
-[e $ != _Tx_count -> 4 `i 517  ]
-[e :U 518 ]
-[; ;motion_control.c: 603: }
-[; ;motion_control.c: 604: }
-"604
-[e :UE 515 ]
+[e :U 526 ]
+"732
+[e $ != _Tx_count -> 4 `i 527  ]
+[e :U 528 ]
+[; ;motion_control.c: 738: }
+[; ;motion_control.c: 739: }
+"739
+[e :UE 525 ]
 }
-"605
+"740
 [v _errorsMain `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;motion_control.c: 605: void errorsMain(char* errNum){
+[; ;motion_control.c: 740: void errorsMain(char* errNum){
 [e :U _errorsMain ]
 [v _errNum `*uc ~T0 @X0 1 r1 ]
 [f ]
-"606
+"741
 [v _Tx_count `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 606: int Tx_count=0;
+[; ;motion_control.c: 741: int Tx_count=0;
 [e = _Tx_count -> 0 `i ]
-[; ;motion_control.c: 607: while(Tx_count!=4)
-"607
-[e $U 523  ]
-[e :U 524 ]
-[; ;motion_control.c: 608: {
-"608
+[; ;motion_control.c: 742: while(Tx_count!=4)
+"742
+[e $U 533  ]
+[e :U 534 ]
+[; ;motion_control.c: 743: {
+"743
 {
-[; ;motion_control.c: 609: while (!TX1STAbits.TRMT);
-"609
-[e $U 526  ]
-[e :U 527 ]
-[e :U 526 ]
-[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 527  ]
-[e :U 528 ]
-[; ;motion_control.c: 610: TX1REG = *errNum;
-"610
+[; ;motion_control.c: 744: while (!TX1STAbits.TRMT);
+"744
+[e $U 536  ]
+[e :U 537 ]
+[e :U 536 ]
+[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 537  ]
+[e :U 538 ]
+[; ;motion_control.c: 745: TX1REG = *errNum;
+"745
 [e = _TX1REG *U _errNum ]
-[; ;motion_control.c: 611: *errNum++;
-"611
+[; ;motion_control.c: 746: *errNum++;
+"746
 [e *U ++ _errNum * -> -> 1 `i `x -> -> # *U _errNum `i `x ]
-[; ;motion_control.c: 612: Tx_count++;
-"612
+[; ;motion_control.c: 747: Tx_count++;
+"747
 [e ++ _Tx_count -> 1 `i ]
-"613
+"748
 }
-[e :U 523 ]
-"607
-[e $ != _Tx_count -> 4 `i 524  ]
-[e :U 525 ]
-[; ;motion_control.c: 613: }
-[; ;motion_control.c: 614: }
-"614
-[e :UE 522 ]
+[e :U 533 ]
+"742
+[e $ != _Tx_count -> 4 `i 534  ]
+[e :U 535 ]
+[; ;motion_control.c: 748: }
+[; ;motion_control.c: 749: }
+"749
+[e :UE 532 ]
 }
-"615
+"750
 [v _sendAcknowledgment `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;motion_control.c: 615: void sendAcknowledgment(char* currentStateBuffer){
+[; ;motion_control.c: 750: void sendAcknowledgment(char* currentStateBuffer){
 [e :U _sendAcknowledgment ]
 [v _currentStateBuffer `*uc ~T0 @X0 1 r1 ]
 [f ]
-"616
+"751
 [v _Tx_count `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 616: int Tx_count=0;
+[; ;motion_control.c: 751: int Tx_count=0;
 [e = _Tx_count -> 0 `i ]
-[; ;motion_control.c: 617: while(Tx_count!=4)
-"617
-[e $U 530  ]
-[e :U 531 ]
-[; ;motion_control.c: 618: {
-"618
+[; ;motion_control.c: 752: while(Tx_count!=4)
+"752
+[e $U 540  ]
+[e :U 541 ]
+[; ;motion_control.c: 753: {
+"753
 {
-[; ;motion_control.c: 619: while (!TX1STAbits.TRMT);
-"619
-[e $U 533  ]
-[e :U 534 ]
-[e :U 533 ]
-[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 534  ]
-[e :U 535 ]
-[; ;motion_control.c: 620: TX1REG = *currentStateBuffer;
-"620
+[; ;motion_control.c: 754: while (!TX1STAbits.TRMT);
+"754
+[e $U 543  ]
+[e :U 544 ]
+[e :U 543 ]
+[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 544  ]
+[e :U 545 ]
+[; ;motion_control.c: 755: TX1REG = *currentStateBuffer;
+"755
 [e = _TX1REG *U _currentStateBuffer ]
-[; ;motion_control.c: 621: *currentStateBuffer++;
-"621
+[; ;motion_control.c: 756: *currentStateBuffer++;
+"756
 [e *U ++ _currentStateBuffer * -> -> 1 `i `x -> -> # *U _currentStateBuffer `i `x ]
-[; ;motion_control.c: 622: Tx_count++;
-"622
+[; ;motion_control.c: 757: Tx_count++;
+"757
 [e ++ _Tx_count -> 1 `i ]
-"623
+"758
 }
-[e :U 530 ]
-"617
-[e $ != _Tx_count -> 4 `i 531  ]
-[e :U 532 ]
-[; ;motion_control.c: 623: }
-[; ;motion_control.c: 624: }
-"624
-[e :UE 529 ]
+[e :U 540 ]
+"752
+[e $ != _Tx_count -> 4 `i 541  ]
+[e :U 542 ]
+[; ;motion_control.c: 758: }
+[; ;motion_control.c: 759: }
+"759
+[e :UE 539 ]
 }
-"625
+"760
 [v _sendAcknowledgmentTOMotion `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;motion_control.c: 625: void sendAcknowledgmentTOMotion(char* currentStateBufferMotion){
+[; ;motion_control.c: 760: void sendAcknowledgmentTOMotion(char* currentStateBufferMotion){
 [e :U _sendAcknowledgmentTOMotion ]
 [v _currentStateBufferMotion `*uc ~T0 @X0 1 r1 ]
 [f ]
-"626
+"761
 [v _Tx_count `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 626: int Tx_count=0;
+[; ;motion_control.c: 761: int Tx_count=0;
 [e = _Tx_count -> 0 `i ]
-[; ;motion_control.c: 627: while(Tx_count != 22)
-"627
-[e $U 537  ]
-[e :U 538 ]
-[; ;motion_control.c: 628: {
-"628
+[; ;motion_control.c: 762: while(currentStateBufferMotion != (0))
+"762
+[e $U 547  ]
+[e :U 548 ]
+[; ;motion_control.c: 763: {
+"763
 {
-[; ;motion_control.c: 629: while (!TX1STAbits.TRMT);
-"629
-[e $U 540  ]
-[e :U 541 ]
-[e :U 540 ]
-[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 541  ]
-[e :U 542 ]
-[; ;motion_control.c: 630: TX1REG = *currentStateBufferMotion;
-"630
+[; ;motion_control.c: 764: while (!TX1STAbits.TRMT);
+"764
+[e $U 550  ]
+[e :U 551 ]
+[e :U 550 ]
+[e $ ! != -> . . _TX1STAbits 0 1 `i -> -> -> 0 `i `Vuc `i 551  ]
+[e :U 552 ]
+[; ;motion_control.c: 765: TX1REG = *currentStateBufferMotion;
+"765
 [e = _TX1REG *U _currentStateBufferMotion ]
-[; ;motion_control.c: 631: *currentStateBufferMotion++;
-"631
+[; ;motion_control.c: 766: *currentStateBufferMotion++;
+"766
 [e *U ++ _currentStateBufferMotion * -> -> 1 `i `x -> -> # *U _currentStateBufferMotion `i `x ]
-[; ;motion_control.c: 632: Tx_count++;
-"632
+[; ;motion_control.c: 767: Tx_count++;
+"767
 [e ++ _Tx_count -> 1 `i ]
-"633
+"768
 }
-[e :U 537 ]
-"627
-[e $ != _Tx_count -> 22 `i 538  ]
-[e :U 539 ]
-[; ;motion_control.c: 633: }
-[; ;motion_control.c: 634: }
-"634
-[e :UE 536 ]
+[e :U 547 ]
+"762
+[e $ != _currentStateBufferMotion -> -> 0 `i `*uc 548  ]
+[e :U 549 ]
+[; ;motion_control.c: 768: }
+[; ;motion_control.c: 769: }
+"769
+[e :UE 546 ]
 }
-"635
+"770
 [v _copyReceivedDataBuffer `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 635: void copyReceivedDataBuffer(){
+[; ;motion_control.c: 770: void copyReceivedDataBuffer(){
 [e :U _copyReceivedDataBuffer ]
 [f ]
-"636
+"771
 [v _dataBufferCounter `i ~T0 @X0 1 a ]
-[; ;motion_control.c: 636: int dataBufferCounter=2;
+[; ;motion_control.c: 771: int dataBufferCounter=2;
 [e = _dataBufferCounter -> 2 `i ]
-[; ;motion_control.c: 637: for(dataBufferCounter=2;dataBufferCounter<9;dataBufferCounter++){
-"637
+[; ;motion_control.c: 772: for(dataBufferCounter=2;dataBufferCounter<9;dataBufferCounter++){
+"772
 {
 [e = _dataBufferCounter -> 2 `i ]
-[e $ < _dataBufferCounter -> 9 `i 544  ]
-[e $U 545  ]
-[e :U 544 ]
+[e $ < _dataBufferCounter -> 9 `i 554  ]
+[e $U 555  ]
+[e :U 554 ]
 {
-[; ;motion_control.c: 638: tempReceivedDataBuffer[dataBufferCounter-2]=mainReceivedDataBuffer[dataBufferCounter];
-"638
+[; ;motion_control.c: 773: tempReceivedDataBuffer[dataBufferCounter-2]=mainReceivedDataBuffer[dataBufferCounter];
+"773
 [e = *U + &U _tempReceivedDataBuffer * -> -> - _dataBufferCounter -> 2 `i `ui `ux -> -> # *U &U _tempReceivedDataBuffer `ui `ux *U + &U _mainReceivedDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux ]
-[; ;motion_control.c: 639: mainReceivedDataBuffer[dataBufferCounter]='#';
-"639
+[; ;motion_control.c: 774: mainReceivedDataBuffer[dataBufferCounter]='#';
+"774
 [e = *U + &U _mainReceivedDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux -> -> 35 `ui `uc ]
-"640
+"775
 }
-"637
+"772
 [e ++ _dataBufferCounter -> 1 `i ]
-[e $ < _dataBufferCounter -> 9 `i 544  ]
-[e :U 545 ]
-"640
+[e $ < _dataBufferCounter -> 9 `i 554  ]
+[e :U 555 ]
+"775
 }
-[; ;motion_control.c: 640: }
-[; ;motion_control.c: 641: }
-"641
-[e :UE 543 ]
+[; ;motion_control.c: 775: }
+[; ;motion_control.c: 776: }
+"776
+[e :UE 553 ]
 }
-"645
+"777
+[v _copyReceivedMotionDataBuffer `(v ~T0 @X0 1 ef ]
+{
+[; ;motion_control.c: 777: void copyReceivedMotionDataBuffer(){
+[e :U _copyReceivedMotionDataBuffer ]
+[f ]
+"778
+[v _dataBufferCounter `i ~T0 @X0 1 a ]
+[; ;motion_control.c: 778: int dataBufferCounter=0;
+[e = _dataBufferCounter -> 0 `i ]
+[; ;motion_control.c: 780: for(dataBufferCounter=0;dataBufferCounter<10;dataBufferCounter++){
+"780
+{
+[e = _dataBufferCounter -> 0 `i ]
+[e $ < _dataBufferCounter -> 10 `i 558  ]
+[e $U 559  ]
+[e :U 558 ]
+{
+[; ;motion_control.c: 781: tempReceivedMotionDataBuffer[dataBufferCounter]=mainReceivedDataBuffer[dataBufferCounter];
+"781
+[e = *U + &U _tempReceivedMotionDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _tempReceivedMotionDataBuffer `ui `ux *U + &U _mainReceivedDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux ]
+[; ;motion_control.c: 782: mainReceivedDataBuffer[dataBufferCounter]='#';
+"782
+[e = *U + &U _mainReceivedDataBuffer * -> -> _dataBufferCounter `ui `ux -> -> # *U &U _mainReceivedDataBuffer `ui `ux -> -> 35 `ui `uc ]
+"783
+}
+"780
+[e ++ _dataBufferCounter -> 1 `i ]
+[e $ < _dataBufferCounter -> 10 `i 558  ]
+[e :U 559 ]
+"783
+}
+[; ;motion_control.c: 783: }
+[; ;motion_control.c: 784: }
+"784
+[e :UE 557 ]
+}
+"788
 [v _pinINIT_extra `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 645: void pinINIT_extra(){
+[; ;motion_control.c: 788: void pinINIT_extra(){
 [e :U _pinINIT_extra ]
 [f ]
-[; ;motion_control.c: 646: ANSELG=0x00; WPUG = 0;
-"646
+[; ;motion_control.c: 789: ANSELG=0x00; WPUG = 0;
+"789
 [e = _ANSELG -> -> 0 `i `uc ]
 [e = _WPUG -> -> 0 `i `uc ]
-[; ;motion_control.c: 648: ANSELF=0x00;
-"648
+[; ;motion_control.c: 791: ANSELF=0x00;
+"791
 [e = _ANSELF -> -> 0 `i `uc ]
-[; ;motion_control.c: 650: ANSELE=0x00; WPUE=0x00;
-"650
+[; ;motion_control.c: 793: ANSELE=0x00; WPUE=0x00;
+"793
 [e = _ANSELE -> -> 0 `i `uc ]
 [e = _WPUE -> -> 0 `i `uc ]
-[; ;motion_control.c: 652: ANSELD=0x00; WPUD=0x00;
-"652
+[; ;motion_control.c: 795: ANSELD=0x00; WPUD=0x00;
+"795
 [e = _ANSELD -> -> 0 `i `uc ]
 [e = _WPUD -> -> 0 `i `uc ]
-[; ;motion_control.c: 654: ANSELB=0x00; WPUB=0x00;
-"654
+[; ;motion_control.c: 797: ANSELB=0x00; WPUB=0x00;
+"797
 [e = _ANSELB -> -> 0 `i `uc ]
 [e = _WPUB -> -> 0 `i `uc ]
-[; ;motion_control.c: 656: ANSELA=0x00;
-"656
+[; ;motion_control.c: 799: ANSELA=0x00;
+"799
 [e = _ANSELA -> -> 0 `i `uc ]
-[; ;motion_control.c: 657: }
-"657
-[e :UE 547 ]
+[; ;motion_control.c: 800: }
+"800
+[e :UE 561 ]
 }
-"662
+"805
 [v _clearAllPorts `(v ~T0 @X0 1 ef ]
 {
-[; ;motion_control.c: 662: void clearAllPorts(){
+[; ;motion_control.c: 805: void clearAllPorts(){
 [e :U _clearAllPorts ]
 [f ]
-[; ;motion_control.c: 663: PORTFbits.RF1=0;
-"663
+[; ;motion_control.c: 806: PORTFbits.RF1=0;
+"806
 [e = . . _PORTFbits 0 1 -> -> 0 `i `uc ]
-[; ;motion_control.c: 664: PORTFbits.RF0=0;
-"664
+[; ;motion_control.c: 807: PORTFbits.RF0=0;
+"807
 [e = . . _PORTFbits 0 0 -> -> 0 `i `uc ]
-[; ;motion_control.c: 665: PORTAbits.RA3=0;
-"665
+[; ;motion_control.c: 808: PORTAbits.RA3=0;
+"808
 [e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
-[; ;motion_control.c: 666: PORTAbits.RA2=0;
-"666
+[; ;motion_control.c: 809: PORTAbits.RA2=0;
+"809
 [e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
-[; ;motion_control.c: 668: }
-"668
-[e :UE 548 ]
+[; ;motion_control.c: 811: }
+"811
+[e :UE 562 ]
 }
-[a 13C 124 0 ]
-[a 25C 124 0 ]
-[a 37C 124 0 ]
-[a 49C 124 0 ]
-[a 2C 77 84 0 ]
+[a 13C 49 48 48 48 124 0 ]
+[a 42C 49 48 48 48 124 0 ]
+[a 55C 49 48 48 48 124 0 ]
+[a 66C 49 48 48 48 124 0 ]
+[a 77C 49 48 48 48 124 0 ]
+[a 90C 49 48 48 48 124 0 ]
+[a 103C 49 48 48 48 124 0 ]
+[a 21C 124 0 ]
+[a 29C 124 0 ]
+[a 1C 77 84 0 ]
 [a 14C 77 84 0 ]
-[a 26C 77 84 0 ]
-[a 38C 77 84 0 ]
-[a 6C 65 67 75 65 67 84 0 ]
-[a 18C 65 67 75 65 67 84 0 ]
-[a 30C 65 67 75 65 67 84 0 ]
-[a 42C 65 67 75 65 67 84 0 ]
-[a 1C 77 79 84 78 0 ]
-[a 28C 52 0 ]
-[a 40C 52 0 ]
-[a 4C 51 0 ]
+[a 22C 77 84 0 ]
+[a 30C 77 84 0 ]
+[a 43C 77 84 0 ]
+[a 56C 77 84 0 ]
+[a 67C 77 84 0 ]
+[a 78C 77 84 0 ]
+[a 91C 77 84 0 ]
+[a 5C 65 67 84 65 67 75 0 ]
+[a 34C 65 67 84 65 67 75 0 ]
+[a 47C 65 67 84 65 67 75 0 ]
+[a 60C 65 67 84 65 67 75 0 ]
+[a 71C 65 67 84 65 67 75 0 ]
+[a 82C 65 67 84 65 67 75 0 ]
+[a 95C 65 67 84 65 67 75 0 ]
+[a 18C 82 69 65 68 0 ]
+[a 26C 82 69 65 68 0 ]
+[a 32C 52 0 ]
+[a 45C 52 0 ]
+[a 80C 52 0 ]
+[a 93C 52 0 ]
+[a 3C 51 0 ]
 [a 16C 51 0 ]
-[a 10C 49 0 ]
-[a 20C 49 0 ]
-[a 22C 49 0 ]
-[a 34C 49 0 ]
-[a 44C 49 0 ]
-[a 46C 49 0 ]
-[a 12C 49 48 48 48 0 ]
-[a 24C 49 48 48 48 0 ]
-[a 36C 49 48 48 48 0 ]
-[a 48C 49 48 48 48 0 ]
-[a 8C 48 0 ]
-[a 32C 48 0 ]
-[a 3C 46 0 ]
-[a 5C 46 0 ]
-[a 7C 46 0 ]
-[a 9C 46 0 ]
-[a 11C 46 0 ]
+[a 24C 51 0 ]
+[a 58C 51 0 ]
+[a 69C 51 0 ]
+[a 7C 49 0 ]
+[a 9C 49 0 ]
+[a 11C 49 0 ]
+[a 28C 49 0 ]
+[a 38C 49 0 ]
+[a 40C 49 0 ]
+[a 49C 49 0 ]
+[a 51C 49 0 ]
+[a 53C 49 0 ]
+[a 64C 49 0 ]
+[a 73C 49 0 ]
+[a 75C 49 0 ]
+[a 86C 49 0 ]
+[a 88C 49 0 ]
+[a 97C 49 0 ]
+[a 99C 49 0 ]
+[a 101C 49 0 ]
+[a 20C 48 0 ]
+[a 36C 48 0 ]
+[a 62C 48 0 ]
+[a 84C 48 0 ]
+[a 2C 46 0 ]
+[a 4C 46 0 ]
+[a 6C 46 0 ]
+[a 8C 46 0 ]
+[a 10C 46 0 ]
+[a 12C 46 0 ]
 [a 15C 46 0 ]
 [a 17C 46 0 ]
 [a 19C 46 0 ]
-[a 21C 46 0 ]
 [a 23C 46 0 ]
+[a 25C 46 0 ]
 [a 27C 46 0 ]
-[a 29C 46 0 ]
 [a 31C 46 0 ]
 [a 33C 46 0 ]
 [a 35C 46 0 ]
+[a 37C 46 0 ]
 [a 39C 46 0 ]
 [a 41C 46 0 ]
-[a 43C 46 0 ]
-[a 45C 46 0 ]
-[a 47C 46 0 ]
+[a 44C 46 0 ]
+[a 46C 46 0 ]
+[a 48C 46 0 ]
+[a 50C 46 0 ]
+[a 52C 46 0 ]
+[a 54C 46 0 ]
+[a 57C 46 0 ]
+[a 59C 46 0 ]
+[a 61C 46 0 ]
+[a 63C 46 0 ]
+[a 65C 46 0 ]
+[a 68C 46 0 ]
+[a 70C 46 0 ]
+[a 72C 46 0 ]
+[a 74C 46 0 ]
+[a 76C 46 0 ]
+[a 79C 46 0 ]
+[a 81C 46 0 ]
+[a 83C 46 0 ]
+[a 85C 46 0 ]
+[a 87C 46 0 ]
+[a 89C 46 0 ]
+[a 92C 46 0 ]
+[a 94C 46 0 ]
+[a 96C 46 0 ]
+[a 98C 46 0 ]
+[a 100C 46 0 ]
+[a 102C 46 0 ]

@@ -5012,7 +5012,9 @@ unsigned char ErrorNames[5]="####";
 
 int mainReceivedDataPosition=0, mainDataReceived=0,MotionDatareceived = 0,MotionDataFlag=0;
 unsigned char mainReceivedDataBuffer[(16+2)]="#";
+
 unsigned char tempReceivedDataBuffer[(16+2)-8]="#";
+unsigned char tempReceivedMotionDataBuffer[(16+2)]="#";
 unsigned char parentalLockBuffer[5]="00000";
 unsigned char currentStateBuffer[((5+2)*4)+2]="#";
 unsigned char sendFinalBufferToGAteway[24] = (0);
@@ -5038,9 +5040,10 @@ void CCP9_Initialize();
 void allPeripheralInit();
 
 void copyReceivedDataBuffer();
+void copyReceivedMotionDataBuffer();
 
 void applianceControl(char switchMSB, char switchLSB, char switchSTATE, char dimmerSpeedMSB, char dimmerSpeedLSB, char parentalControl, char finalFrameState);
-
+void MotionControl( char status);
 interrupt void isr(){
 
 
@@ -5055,25 +5058,25 @@ errorsISR(ErrorNames);
 
 mainReceivedDataBuffer[mainReceivedDataPosition]=RC1REG;
 
-# 164
+# 167
 if(mainReceivedDataBuffer[0]=='%'){
 mainReceivedDataPosition++;
 if(mainReceivedDataPosition>15){
 mainDataReceived=1;
-
 mainReceivedDataPosition=0;
 RC1IF=0;
 }
 }
-else if((mainReceivedDataBuffer[0]=='M') && mainReceivedDataBuffer[0] != (0))
+else if(mainReceivedDataBuffer[0]=='M' )
 {
-mainReceivedDataPosition++;
+
 if(mainReceivedDataBuffer[mainReceivedDataPosition] == '|'){
-MotionDatareceived=1;
+mainDataReceived=1;
 mainReceivedDataPosition=0;
 RC1IF=0;
 
 }
+mainReceivedDataPosition++;
 }
 else{
 RC1STAbits.CREN = 0;
@@ -5086,7 +5089,7 @@ errorsISR(ErrorNames);
 }
 }
 
-# 201
+# 204
 int main() {
 _delay((unsigned long)((2000)*(16000000/4000.0)));
 M1=1; M2=1; M3=1; M4=1; M5=1;
@@ -5097,7 +5100,6 @@ allPeripheralInit();
 
 while(1){
 if(mainDataReceived==1){
-
 mainDataReceived=0;
 if(mainReceivedDataBuffer[0]=='%' && mainReceivedDataBuffer[1]=='%' && mainReceivedDataBuffer[14]=='@' && mainReceivedDataBuffer[15]=='@'){
 copyReceivedDataBuffer();
@@ -5111,9 +5113,22 @@ tempReceivedDataBuffer[5],
 tempReceivedDataBuffer[6]);
 
 }
-else if(mainReceivedDataBuffer[0]=='R' && mainReceivedDataBuffer[1]=='T' && mainReceivedDataBuffer[9]=='1'){
-MotionDataFlag = 1;
-errorsISR("MOTN");
+else if(mainReceivedDataBuffer[0]=='M' && mainReceivedDataBuffer[1]=='T'){
+strcpy(sendFinalBufferToGAteway,"MT");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"3");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"ACTACK");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+
 }
 else
 {
@@ -5130,7 +5145,7 @@ RC1STAbits.SPEN=1;
 }
 }
 
-# 248
+# 264
 int man = 1;
 if(parentalLockBuffer[1] == '0' && PORTFbits.RF7 == 0 && M1 == 0)
 {
@@ -5196,10 +5211,7 @@ man=0;
 M2=0;
 }
 
-
-
-
-if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 && mainReceivedDataBuffer[9]=='1')
+if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 )
 {
 if(man == 1)
 {
@@ -5208,13 +5220,9 @@ strcpy(sendFinalBufferToGAteway,"MT");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"3");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"ACKACT");
+strcat(sendFinalBufferToGAteway,"READ");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"0");
-strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1");
-strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1000");
 strcat(sendFinalBufferToGAteway,"|");
 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
 
@@ -5225,23 +5233,20 @@ M3=1;
 
 }
 
-if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1 && mainReceivedDataBuffer[9]=='1')
+if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1)
 {
-MotionDataFlag = 0;
+
 if(man==1)
 {
 
-strcat(sendFinalBufferToGAteway,"MT");
+strcpy(sendFinalBufferToGAteway,"MT");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"3");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"ACKACT");
+strcat(sendFinalBufferToGAteway,"READ");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"1");
-strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1");
-strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+strcat(sendFinalBufferToGAteway,"|");
 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
 
 PORTAbits.RA3=1;
@@ -5254,7 +5259,7 @@ M3=0;
 
 
 
-if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 && mainReceivedDataBuffer[9]=='1' )
+if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 )
 {
 if(man==1)
 {
@@ -5262,13 +5267,16 @@ strcpy(sendFinalBufferToGAteway,"MT");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"4");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"ACKACT");
+strcat(sendFinalBufferToGAteway,"ACTACK");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"0");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"1");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
 
 PORTAbits.RA2=0;
@@ -5287,13 +5295,139 @@ strcpy(sendFinalBufferToGAteway,"MT");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"4");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"ACKACT");
+strcat(sendFinalBufferToGAteway,"ACTACK");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"1");
 strcat(sendFinalBufferToGAteway,".");
 strcat(sendFinalBufferToGAteway,"1");
 strcat(sendFinalBufferToGAteway,".");
-strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
+
+sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+
+PORTAbits.RA2=1;
+}
+man=0;
+M4=0;
+
+}
+
+
+
+}
+}
+void MotionControl(char status)
+{
+if(status == '1' ){
+
+int man=1;
+
+
+if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 0 && M3 == 0 )
+{
+if(man == 1)
+{
+
+strcpy(sendFinalBufferToGAteway,"MT");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"3");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"ACTACK");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"0");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
+sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+
+PORTAbits.RA3=0;
+}
+man=0;
+M3=1;
+
+}
+
+if(parentalLockBuffer[3] == '0' && PORTFbits.RF3 == 1 && M3 == 1)
+{
+
+if(man==1)
+{
+
+strcpy(sendFinalBufferToGAteway,"MT");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"3");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"ACTACK");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
+sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+
+PORTAbits.RA3=1;
+}
+man=0;
+M3=0;
+
+}
+
+
+
+
+if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 0 && M4 == 0 )
+{
+if(man==1)
+{
+strcpy(sendFinalBufferToGAteway,"MT");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"4");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"ACTACK");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"0");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
+sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+
+PORTAbits.RA2=0;
+}
+man=0;
+M4=1;
+
+}
+
+if(parentalLockBuffer[4] == '0' && PORTFbits.RF2 == 1 && M4 == 1 )
+{
+MotionDataFlag = 0;
+if(man==1)
+{
+strcpy(sendFinalBufferToGAteway,"MT");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"4");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"ACTACK");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1");
+strcat(sendFinalBufferToGAteway,".");
+strcat(sendFinalBufferToGAteway,"1000|");
+
 
 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
 
@@ -5305,8 +5439,8 @@ M4=0;
 }
 
 }
-}
 
+}
 void applianceControl(char charSwitchMSB, char charSwitchLSB, char charSwitchSTATE, char chDimmerSpeedMSB, char chDimmerSpeedLSB,
 char charParentalControl, char charFinalFrameState){
 
@@ -5381,7 +5515,7 @@ break;
 
 }
 
-# 502
+# 637
 void GPIO_pin_Initialize(){
 clearAllPorts();
 pinINIT_extra();
@@ -5396,20 +5530,20 @@ TRISFbits.TRISF0 = 0;
 TRISAbits.TRISA3 = 0;
 TRISAbits.TRISA2 = 0;
 
-# 520
+# 655
 TRISCbits.TRISC6 = 0;
 TRISCbits.TRISC7 = 1;
 
 clearAllPorts();
 }
 
-# 529
+# 664
 void allPeripheralInit(){
 EUSART_Initialize();
 
 }
 
-# 537
+# 672
 void EUSART_Initialize(){
 PIE1bits.RC1IE = 0;
 PIE1bits.TX1IE = 0;
@@ -5500,7 +5634,7 @@ Tx_count++;
 }
 void sendAcknowledgmentTOMotion(char* currentStateBufferMotion){
 int Tx_count=0;
-while(Tx_count != 22)
+while(currentStateBufferMotion != (0))
 {
 while (!TX1STAbits.TRMT);
 TX1REG = *currentStateBufferMotion;
@@ -5515,8 +5649,16 @@ tempReceivedDataBuffer[dataBufferCounter-2]=mainReceivedDataBuffer[dataBufferCou
 mainReceivedDataBuffer[dataBufferCounter]='#';
 }
 }
+void copyReceivedMotionDataBuffer(){
+int dataBufferCounter=0;
 
-# 645
+for(dataBufferCounter=0;dataBufferCounter<10;dataBufferCounter++){
+tempReceivedMotionDataBuffer[dataBufferCounter]=mainReceivedDataBuffer[dataBufferCounter];
+mainReceivedDataBuffer[dataBufferCounter]='#';
+}
+}
+
+# 788
 void pinINIT_extra(){
 ANSELG=0x00; WPUG = 0;
 
@@ -5531,7 +5673,7 @@ ANSELB=0x00; WPUB=0x00;
 ANSELA=0x00;
 }
 
-# 662
+# 805
 void clearAllPorts(){
 PORTFbits.RF1=0;
 PORTFbits.RF0=0;

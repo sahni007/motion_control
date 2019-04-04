@@ -3,7 +3,7 @@
  * Author: VARUNS SAHNI
  *
  * updated: 4-03-2019
- * this is test  code of 2 on off switches and two motion sensor
+ * this is proper  working code of code of 2 on off switches and two motion sensor
  */
 
 #include <stdio.h>
@@ -116,7 +116,9 @@ unsigned char ErrorNames[5]="####";
 
 int mainReceivedDataPosition=0, mainDataReceived=FALSE,MotionDatareceived = FALSE,MotionDataFlag=0;
 unsigned char mainReceivedDataBuffer[RECIEVED_DATA_LENGTH]="#"; 
+
 unsigned char tempReceivedDataBuffer[RECIEVED_DATA_LENGTH-8]="#";
+unsigned char tempReceivedMotionDataBuffer[RECIEVED_DATA_LENGTH]="#";
 unsigned char parentalLockBuffer[5]="00000";
 unsigned char currentStateBuffer[(TOTAL_NUMBER_OF_SWITCH*4)+2]="#";
 unsigned char sendFinalBufferToGAteway[FINALFRAMELENGTH] = NULL;
@@ -142,9 +144,10 @@ void CCP9_Initialize();
 void allPeripheralInit();
 
 void copyReceivedDataBuffer();
+void copyReceivedMotionDataBuffer();
 
 void applianceControl(char switchMSB, char switchLSB, char switchSTATE, char dimmerSpeedMSB, char dimmerSpeedLSB, char parentalControl, char finalFrameState);
-
+void MotionControl( char status);
 interrupt void isr(){
  
     // ************************************* UART INTERRUPT *********************************************** //
@@ -164,21 +167,21 @@ interrupt void isr(){
         if(mainReceivedDataBuffer[0]=='%'){
             mainReceivedDataPosition++;
             if(mainReceivedDataPosition>15){
-                mainDataReceived=TRUE;
-                
+                mainDataReceived=TRUE;           
                 mainReceivedDataPosition=0;                
                 RC1IF=0;                
             }
         }
-        else if((mainReceivedDataBuffer[0]=='M') && mainReceivedDataBuffer[0] != NULL)
-        {
-             mainReceivedDataPosition++;
-            if(mainReceivedDataBuffer[mainReceivedDataPosition] == '|'){
-                MotionDatareceived=TRUE;
+        else if(mainReceivedDataBuffer[0]=='M' )
+        {         
+             
+             if(mainReceivedDataBuffer[mainReceivedDataPosition] == '|'){
+                mainDataReceived=TRUE;             
                 mainReceivedDataPosition=0;           
                 RC1IF=0; 
                 
             }
+             mainReceivedDataPosition++;
         }
         else{
             RC1STAbits.CREN = 0; // countinuous Recieve Disable
@@ -207,8 +210,7 @@ int main() {
             allPeripheralInit();
     
     while(1){       
-        if(mainDataReceived==TRUE){
-            
+        if(mainDataReceived==TRUE){        
             mainDataReceived=FALSE;
             if(mainReceivedDataBuffer[0]=='%' && mainReceivedDataBuffer[1]=='%' && mainReceivedDataBuffer[14]=='@' && mainReceivedDataBuffer[15]=='@'){
                 copyReceivedDataBuffer();
@@ -222,9 +224,22 @@ int main() {
                         tempReceivedDataBuffer[6]);
                                 
             }   // End of all buffer data check
-            else if(mainReceivedDataBuffer[0]=='R' && mainReceivedDataBuffer[1]=='T' && mainReceivedDataBuffer[9]=='1'){
-                    MotionDataFlag = 1;
-                    errorsISR("MOTN");
+            else if(mainReceivedDataBuffer[0]=='M' && mainReceivedDataBuffer[1]=='T'){
+                strcpy(sendFinalBufferToGAteway,"MT");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"3");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");   
+                sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+                    
             }
             else
             {
@@ -245,6 +260,7 @@ int main() {
         
         //check switch one status
         //off condition
+      //  memset(sendFinalBufferToGAteway,'0',sizeof(sendFinalBufferToGAteway));;
        int man = 1;
         if(parentalLockBuffer[1] == CHAR_OFF  && INPUTSWITCH1 == OFF && M1 == OFF)
         {
@@ -309,11 +325,8 @@ int main() {
             man=0;
             M2=0;
         }
-        
-        
-       // //check switch third status 
-        //off condition
-        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == OFF && M3 == OFF && mainReceivedDataBuffer[9]=='1')
+               //off condition
+        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == OFF && M3 == OFF )
         {
             if(man == 1)
             {
@@ -322,16 +335,12 @@ int main() {
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"3");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"ACKACT");
+                strcat(sendFinalBufferToGAteway,"READ");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"0");
-                strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1");
-                strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1000");
                 strcat(sendFinalBufferToGAteway,"|");
                 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
-               // memset(sendFinalBufferToGAteway,'0',sizeof(sendFinalBufferToGAteway));
+                
             OUTPUT_RELAY3=OFF;
             }
             man=0;
@@ -339,25 +348,22 @@ int main() {
           
         }
         //on condtion
-        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == ON && M3 == ON && mainReceivedDataBuffer[9]=='1')
+        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == ON && M3 == ON)
         {
            
             if(man==1)
             {
           //  sendAcknowledgmentTOMotion("MT.3.ACKACT.0.1.1000");
-                strcat(sendFinalBufferToGAteway,"MT");
+                strcpy(sendFinalBufferToGAteway,"MT");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"3");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"ACKACT");
+                strcat(sendFinalBufferToGAteway,"READ");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"1");
-                strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1");
-                strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+                strcat(sendFinalBufferToGAteway,"|");
                 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
-              // memset(sendFinalBufferToGAteway,'0',sizeof(sendFinalBufferToGAteway));
+                
             OUTPUT_RELAY3=ON;
             }
             man=0;
@@ -365,10 +371,10 @@ int main() {
             
         }
         
-#ifdef SWITCH_4_RELAY      
+      
        // //check switch fourth status 
         //off condition
-        if(parentalLockBuffer[4] == CHAR_OFF && INPUTSWITCH4 == OFF && M4 == OFF && mainReceivedDataBuffer[9]=='1' )
+        if(parentalLockBuffer[4] == CHAR_OFF && INPUTSWITCH4 == OFF && M4 == OFF  )
         {
             if(man==1)
             {
@@ -376,15 +382,18 @@ int main() {
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"4");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"ACKACT");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"0");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"1");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+              //  strcat(sendFinalBufferToGAteway,"|");
                 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);  
-            //    memset(sendFinalBufferToGAteway,'0',sizeof(sendFinalBufferToGAteway));
+            
             OUTPUT_RELAY4=OFF;
             }
             man=0;
@@ -401,16 +410,142 @@ int main() {
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"4");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"ACKACT");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"1");
                 strcat(sendFinalBufferToGAteway,".");
                 strcat(sendFinalBufferToGAteway,"1");
                 strcat(sendFinalBufferToGAteway,".");
-                strcat(sendFinalBufferToGAteway,"1000");strcat(sendFinalBufferToGAteway,"|");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+             //   strcat(sendFinalBufferToGAteway,"|");
                 
                 sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
-            //    memset(sendFinalBufferToGAteway,'0',sizeof(sendFinalBufferToGAteway));
+          
+            OUTPUT_RELAY4=ON;
+            }
+            man=0;
+            M4=0;
+           
+        }
+        
+        
+
+    }    
+}
+void MotionControl(char status)
+{
+    if(status == '1' ){
+    ///    errorsMain("MOTN");
+        int man=1;
+               // //check switch third status 
+        //off condition
+        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == OFF && M3 == OFF )
+        {
+            if(man == 1)
+            {
+           // sendAcknowledgmentTOMotion("MT.3.ACKACT.0.1.1000");
+                strcpy(sendFinalBufferToGAteway,"MT");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"3");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"0");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+             //   strcat(sendFinalBufferToGAteway,"|");
+                sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+                
+            OUTPUT_RELAY3=OFF;
+            }
+            man=0;
+            M3=1;
+          
+        }
+        //on condtion
+        if(parentalLockBuffer[3] == CHAR_OFF && INPUTSWITCH3 == ON && M3 == ON)
+        {
+           
+            if(man==1)
+            {
+          //  sendAcknowledgmentTOMotion("MT.3.ACKACT.0.1.1000");
+                strcpy(sendFinalBufferToGAteway,"MT");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"3");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+            //    strcat(sendFinalBufferToGAteway,"|");
+                sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+                
+            OUTPUT_RELAY3=ON;
+            }
+            man=0;
+            M3=0;
+            
+        }
+        
+#ifdef SWITCH_4_RELAY      
+       // //check switch fourth status 
+        //off condition
+        if(parentalLockBuffer[4] == CHAR_OFF && INPUTSWITCH4 == OFF && M4 == OFF  )
+        {
+            if(man==1)
+            {
+                strcpy(sendFinalBufferToGAteway,"MT");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"4");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"0");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+              //  strcat(sendFinalBufferToGAteway,"|");
+                sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);  
+            
+               OUTPUT_RELAY4=OFF;
+            }
+            man=0;
+            M4=1;
+            
+        }
+        //on condtion
+        if(parentalLockBuffer[4] == CHAR_OFF && INPUTSWITCH4 == ON && M4 == ON )
+        {
+            MotionDataFlag = 0;
+            if(man==1)
+            {
+                strcpy(sendFinalBufferToGAteway,"MT");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"4");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"ACTACK");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1");
+                strcat(sendFinalBufferToGAteway,".");
+                strcat(sendFinalBufferToGAteway,"1000|");
+            //    strcat(sendFinalBufferToGAteway,"|");
+                
+                sendAcknowledgmentTOMotion(sendFinalBufferToGAteway);
+          
             OUTPUT_RELAY4=ON;
             }
             man=0;
@@ -418,9 +553,9 @@ int main() {
            
         }
 #endif
-    }    
+    }
+        
 }
-
 void applianceControl(char charSwitchMSB, char charSwitchLSB, char charSwitchSTATE, char chDimmerSpeedMSB, char chDimmerSpeedLSB,
         char charParentalControl, char charFinalFrameState){
    
@@ -612,14 +747,24 @@ void errorsMain(char* errNum){
         Tx_count++;
  	}
 }
+//void sendAcknowledgment(char* currentStateBuffer){
+//  int Tx_count=0;
+//  	while(Tx_count!=4)
+// 	{ 
+//        while (!TX1STAbits.TRMT);
+// 		TX1REG = *currentStateBuffer;
+// 		*currentStateBuffer++;
+//        Tx_count++;
+// 	}
+//}
 void sendAcknowledgment(char* currentStateBuffer){
-  int Tx_count=0;
-  	while(Tx_count!=4)
+
+  	while(*currentStateBuffer != '|')
  	{ 
-        while (!TX1STAbits.TRMT);
+        
  		TX1REG = *currentStateBuffer;
  		*currentStateBuffer++;
-        Tx_count++;
+       
  	}
 }
 void sendAcknowledgmentTOMotion(char* currentStateBufferMotion){
@@ -637,6 +782,14 @@ void copyReceivedDataBuffer(){
     for(dataBufferCounter=2;dataBufferCounter<9;dataBufferCounter++){
         tempReceivedDataBuffer[dataBufferCounter-2]=mainReceivedDataBuffer[dataBufferCounter]; // copy data buffer from main
         mainReceivedDataBuffer[dataBufferCounter]='#';  // clean data buffer
+    }
+}
+void copyReceivedMotionDataBuffer(){
+    int dataBufferCounter=0;
+
+    for(dataBufferCounter=0;dataBufferCounter<10;dataBufferCounter++){
+        tempReceivedMotionDataBuffer[dataBufferCounter]=mainReceivedDataBuffer[dataBufferCounter]; // copy data buffer from main
+         mainReceivedDataBuffer[dataBufferCounter]='#';  // clean data buffer
     }
 }
 /*
